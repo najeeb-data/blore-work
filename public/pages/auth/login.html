@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#0018E8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/pages/auth.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('blorework_theme');
+        document.documentElement.setAttribute('data-theme', (t === 'dark' || t === 'light') ? t : 'light');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <header id="navbar-root"></header>
+  <main class="auth-container">
+    <div class="auth-card">
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Don't have an account? <a href="/pages/auth/register.html">Sign up</a></p>
+      
+      <button class="btn btn-google btn-block" style="margin-bottom: 1rem;">
+        Continue with Google
+      </button>
+      
+      <div class="auth-divider">or use your phone</div>
+
+      <form class="auth-form" onsubmit="event.preventDefault(); alert('Firebase not connected yet.');">
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" type="tel" placeholder="+91 98765 43210" required>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Send OTP</button>
+      </form>
+    </div>
+  </main>
+  <script type="module">
+    import { initNavbar } from '/js/components/navbar.js';
+    initNavbar();
+  </script>
+</body>
+</html>
