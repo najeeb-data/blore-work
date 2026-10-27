@@ -1,0 +1,39 @@
+/* Design tokens. Every color, font, and spacing value in the app should trace back here. */
+:root {
+  --color-primary: #4c1d95;
+  --color-primary-hover: #5b21b6;
+  --color-primary-dark: #3b0f73;
+  --color-accent-start: #f97316;
+  --color-accent-end: #fdba74;
+  --gradient-accent: linear-gradient(135deg, var(--color-accent-start), var(--color-accent-end));
+  --gradient-hero: linear-gradient(135deg, #ede9fe 0%, #fef3c7 60%, #fed7aa 100%);
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-error: #dc2626;
+  --color-success: #16a34a;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-12: 3rem; --space-16: 4rem;
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 20px; --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(76,29,149,0.08);
+  --shadow-lg: 0 12px 32px rgba(76,29,149,0.12);
+  --touch-target: 44px;
+  --container: 1120px;
+  --container-pad: 1rem;
+}
+[data-theme="dark"] {
+  --color-bg: #0f0a1f;
+  --color-surface: #1a1533;
+  --color-text: #f9fafb;
+  --color-text-muted: #a1a1aa;
+  --color-border: #2d2447;
+  --gradient-hero: linear-gradient(135deg, #2a1a52 0%, #3b1f2a 60%, #4a2c2a 100%);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+}
