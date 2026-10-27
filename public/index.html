@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloreWork — Find Nearby Daily Work. Hire Workers in Minutes.</title>
+  <meta name="description" content="Hyperlocal job marketplace for Bangalore.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/chips.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/footer.css">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+  <link rel="stylesheet" href="/css/pages/home.css">
+</head>
+<body>
+  <header id="navbar-root">
+    <div class="navbar">
+      <div class="navbar__inner">
+        <a class="navbar__logo" href="/">BloreWork</a>
+        <nav class="navbar__links">
+          <a class="navbar__link" href="/pages/jobs/index">Find Jobs</a>
+          <a class="navbar__link" href="/pages/auth/register">For Workers</a>
+          <a class="navbar__link" href="/pages/auth/register">For Clients</a>
+        </nav>
+        <div class="navbar__actions">
+          <a class="btn btn-ghost btn-sm" href="/pages/auth/login">Log in</a>
+          <a class="btn btn-primary btn-sm" href="/pages/auth/register">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__inner">
+        <p class="hero__eyebrow">NEW JOBS ADDED DAILY IN BANGALORE</p>
+        <h1 class="hero__title">Find Nearby Daily Work. Hire Workers in <span class="gradient-text">Minutes.</span></h1>
+        <p class="hero__lead">Workers find work today, tomorrow, or this weekend. Businesses hire in minutes.</p>
+        <form class="hero__search" onsubmit="event.preventDefault()">
+          <input class="hero__search-input" type="search" placeholder="Job title or category" aria-label="Search jobs">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <div class="hero__chips">
+          <button class="chip">Today</button>
+          <button class="chip">Tomorrow</button>
+          <button class="chip">This Weekend</button>
+          <button class="chip">Nearby Jobs</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer-root">
+    <div class="footer">
+      <div class="footer__inner">
+        <div>
+          <h4 class="footer__heading">For Workers</h4>
+          <ul class="footer__list">
+            <li><a class="footer__link" href="/pages/auth/register">Find Jobs</a></li>
+            <li><a class="footer__link" href="/pages/worker/dashboard">Worker Dashboard</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">For Clients</h4>
+          <ul class="footer__list">
+            <li><a class="footer__link" href="/pages/client/post-job">Post a Job</a></li>
+            <li><a class="footer__link" href="/pages/client/dashboard">Client Dashboard</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">Categories</h4>
+          <ul class="footer__list">
+            <li><a class="footer__link" href="/pages/jobs/index?category=event-staff">Event Staff</a></li>
+            <li><a class="footer__link" href="/pages/jobs/index?category=hotel-restaurant">Hotel &amp; Restaurant</a></li>
+            <li><a class="footer__link" href="/pages/jobs/index?category=catering">Catering</a></li>
+            <li><a class="footer__link" href="/pages/jobs/index?category=housekeeping">Housekeeping</a></li>
+            <li><a class="footer__link" href="/pages/jobs/index?category=delivery">Delivery &amp; Logistics</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">More</h4>
+          <ul class="footer__list">
+            <li><a class="footer__link" href="/pages/legal/privacy">Privacy</a></li>
+            <li><a class="footer__link" href="/pages/legal/terms">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; BloreWork</span>
+        <span>Made in Bangalore.</span>
+      </div>
+    </div>
+  </footer>
+
+  <nav id="bottom-nav-root"></nav>
+</body>
+</html>
