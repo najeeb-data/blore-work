@@ -12,22 +12,38 @@ export async function initBottomNav() {
     if (!user) return;
 
     const role = await getCurrentUserRole();
+    const currentPath = window.location.pathname;
+
+    let dashRoute = '/pages/worker/dashboard.html';
+    if (role === 'client') dashRoute = '/pages/client/dashboard.html';
+    if (role === 'admin') dashRoute = ROUTES.ADMIN_DASHBOARD;
+
+    let profileRoute = '/pages/worker/profile.html';
+    if (role === 'client') profileRoute = '/pages/client/profile.html';
+
     const items = [
-      { label: 'Home', href: ROUTES.HOME },
-      { label: 'Search', href: ROUTES.JOBS },
+      { label: 'Home', icon: 'home', href: ROUTES.HOME, match: '/' },
+      { label: 'Search', icon: 'search', href: ROUTES.JOBS, match: '/pages/jobs/index.html' },
       role === 'client'
-        ? { label: 'Post', href: ROUTES.POST_JOB }
-        : { label: 'Saved', href: ROUTES.SAVED_JOBS },
-      { label: 'Account', href: ROUTES.HOME },
+        ? { label: 'Post', icon: 'plus-circle', href: ROUTES.POST_JOB, match: '/pages/client/post-job.html' }
+        : { label: 'Saved', icon: 'bookmark', href: '/pages/worker/saved.html', match: '/pages/worker/saved.html' },
+      { label: 'Account', icon: 'user', href: profileRoute, match: profileRoute },
     ];
 
     root.append(
       el('div', { class: 'bottom-nav' }, [
         el('div', { class: 'bottom-nav__inner' },
-          items.map((it) => el('a', { class: 'bottom-nav__link', href: it.href }, it.label))
+          items.map((it) => {
+            const isActive = currentPath === it.match || (it.match === '/' && currentPath === '/index.html');
+            return el('a', { class: `bottom-nav__link ${isActive ? 'active' : ''}`, href: it.href }, [
+              el('i', { 'data-lucide': it.icon, style: 'width: 20px; height: 20px;' }),
+              el('span', {}, it.label)
+            ]);
+          })
         ),
       ])
     );
+    if (window.lucide) window.lucide.createIcons();
   }
 
   render(null);

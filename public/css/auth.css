@@ -1,0 +1,31 @@
+.auth-body{padding-bottom:24px}
+.auth-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+.auth-brand{margin-bottom:16px;font-size:20px;font-weight:700;color:var(--blue);text-decoration:none}
+.auth-card{width:100%;max-width:420px;padding:24px 20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+.auth-card h1{margin-bottom:4px;font-size:24px;color:#111827}
+.muted{color:var(--muted);font-size:14px}
+.muted a{color:var(--blue);text-decoration:none;font-weight:600}
+
+.role-switch{display:flex;gap:8px;margin:16px 0}
+.role-switch .chip{flex:1;justify-content:center;padding:10px;border:1px solid var(--border);background:#fff;border-radius:8px;cursor:pointer;font-weight:500;color:var(--muted)}
+.role-switch .chip.active{border-color:var(--blue);color:var(--blue);background:#EEF1FE}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:8px;font-weight:600;cursor:pointer;border:none;font-size:16px}
+.btn-block{width:100%}
+.btn-primary{background:var(--blue);color:#fff;margin-top:16px}
+.btn-secondary{background:#fff;border:1px solid var(--border);color:#374151}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0 0;color:var(--muted);font-size:13px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border)}
+
+.field{margin-top:16px;text-align:left}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px;color:#111827}
+.field input{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:16px;box-sizing:border-box}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}
+
+.auth-msg{margin-top:16px;padding:12px;border-radius:10px;font-size:14px;text-align:left}
+.auth-msg.error{background:#FEF2F2;color:#B91C1C;border:1px solid #FECACA}
+.auth-msg.info{background:#EEF1FE;color:var(--blue);border:1px solid #D6DCFB}
+
+.link-btn{background:none;border:0;padding:0;color:var(--blue);font-weight:600;cursor:pointer}
+.link-btn:disabled{color:var(--muted);cursor:default;font-weight:400}
+.grecaptcha-badge{visibility:hidden}

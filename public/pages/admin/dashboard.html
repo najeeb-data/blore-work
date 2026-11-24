@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+  <link rel="stylesheet" href="/css/pages/dashboard.css">
+  <style>
+    .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .admin-stat-card { background: var(--color-surface); padding: 20px 16px; border-radius: 12px; border: 1px solid var(--color-border); text-align: center; }
+    .admin-stat-val { font-size: 24px; font-weight: 700; color: var(--color-primary); margin-bottom: 4px; }
+    .admin-stat-lbl { color: var(--color-text-muted); font-size: 13px; font-weight: 500; }
+    
+    .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .admin-table { width: 100%; min-width: 600px; text-align: left; border-collapse: collapse; font-size: 14px; }
+    .admin-table th, .admin-table td { padding: 12px 8px; border-bottom: 1px solid var(--color-border); }
+    .admin-table th { background: var(--color-bg); color: var(--color-text-muted); font-weight: 500; font-size: 12px; text-transform: uppercase; }
+    .role-select { padding: 4px; border-radius: 4px; border: 1px solid var(--color-border); background: var(--color-surface); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header id="navbar-root"></header>
+  
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <a class="dashboard-sidebar__link active" href="/pages/admin/dashboard.html"><i data-lucide="shield" class="icon"></i> Admin Overview</a>
+    </aside>
+
+    <main class="dashboard-content" style="max-width: 1200px;">
+      <div class="dashboard-header">
+        <h1>Admin Dashboard</h1>
+      </div>
+
+      <div class="admin-stats">
+        <div class="admin-stat-card"><div class="admin-stat-val" id="stat-total-users">-</div><div class="admin-stat-lbl">Total Users</div></div>
+        <div class="admin-stat-card"><div class="admin-stat-val" id="stat-total-jobs">-</div><div class="admin-stat-lbl">Total Jobs</div></div>
+        <div class="admin-stat-card"><div class="admin-stat-val" id="stat-completed-jobs">-</div><div class="admin-stat-lbl">Completed Jobs</div></div>
+        <div class="admin-stat-card"><div class="admin-stat-val" id="stat-reports" style="color: var(--color-error);">-</div><div class="admin-stat-lbl">Pending Reports</div></div>
+      </div>
+
+      <div class="card mb-4" style="border: 1px solid var(--color-error); padding: 20px;">
+        <h3 style="color: var(--color-error); margin-bottom: 16px;">🚨 Reported Jobs</h3>
+        <div class="table-wrapper"><div id="admin-reports-list"><p class="text-muted">Loading reports...</p></div></div>
+      </div>
+
+      <div class="card mb-4" style="padding: 20px;">
+        <h3 style="margin-bottom: 16px;">All Jobs</h3>
+        <div class="table-wrapper"><div id="admin-jobs-list"><p class="text-muted">Loading jobs...</p></div></div>
+      </div>
+
+      <div class="card" style="padding: 20px;">
+        <h3 style="margin-bottom: 16px;">All Users</h3>
+        <div class="table-wrapper"><div id="admin-users-list"><p class="text-muted">Loading users...</p></div></div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+  <script type="module" src="/js/pages/admin-dashboard.page.js"></script>
+</body>
+</html>

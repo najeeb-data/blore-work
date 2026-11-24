@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Jobs — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/footer.css">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css">
+  <link rel="stylesheet" href="/css/components/float-btn.css">
+  <link rel="stylesheet" href="/css/pages/jobs.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  
+  <main class="page-container">
+    <div class="jobs-header">
+      <h1>Find Jobs</h1>
+      <p class="text-muted">Browse daily work near you</p>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+      <div class="search-box" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+        <i data-lucide="search" class="icon"></i>
+        <input type="search" id="job-search" placeholder="Search by title or location...">
+      </div>
+      <select id="sort-select" class="sort-select">
+        <option value="newest">Newest First</option>
+        <option value="pay-high">Highest Pay</option>
+        <option value="pay-low">Lowest Pay</option>
+      </select>
+    </div>
+    
+    <div class="chips-container" id="filter-chips">
+      <button class="chip active" data-category="All Jobs" style="flex-shrink: 0;">All Jobs</button>
+      <button class="chip" id="interested-btn" style="color: var(--color-primary); border-color: var(--color-primary); display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+        <i data-lucide="star" style="width: 14px; height: 14px;"></i> My Preferences
+      </button>
+    </div>
+    
+    <div id="jobs-grid" class="jobs-grid"></div>
+  </main>
+
+  <footer id="footer-root"></footer>
+  <nav id="bottom-nav-root"></nav>
+  
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+  <script type="module" src="/js/pages/jobs.page.js?v=6"></script>
+</body>
+</html>

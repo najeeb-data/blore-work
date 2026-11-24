@@ -2,63 +2,116 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="theme-color" content="#0018E8">
+  <meta name="theme-color" content="#263FE5">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/assets/icons/favicon.ico">
+  <title>BloreWork — Find Nearby Daily Work</title>
+  <meta name="description" content="Hyperlocal job marketplace for Bangalore. Find daily work or hire workers in minutes.">
   <link rel="manifest" href="/manifest.json">
-  <title>BloreWork — Find Nearby Daily Work. Hire Workers in Minutes.</title>
-  <meta name="description" content="Hyperlocal job marketplace for Bangalore. Find nearby daily work or hire workers in minutes.">
-  <script>
-    // Apply stored theme before first paint to prevent a light/dark flash.
-    (function () {
-      try {
-        var t = localStorage.getItem('blorework_theme');
-        document.documentElement.setAttribute('data-theme', (t === 'dark' || t === 'light') ? t : 'light');
-      } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
-    })();
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/base/variables.css">
   <link rel="stylesheet" href="/css/base/reset.css">
   <link rel="stylesheet" href="/css/base/typography.css">
   <link rel="stylesheet" href="/css/components/buttons.css">
-  <link rel="stylesheet" href="/css/components/chips.css">
   <link rel="stylesheet" href="/css/components/navbar.css">
   <link rel="stylesheet" href="/css/components/footer.css">
   <link rel="stylesheet" href="/css/components/bottom-nav.css">
-  <link rel="stylesheet" href="/css/components/cards.css">
-  <link rel="stylesheet" href="/css/pages/home.css">
+  <link rel="stylesheet" href="/css/components/float-btn.css">
+  <link rel="stylesheet" href="/css/pages/home.css?v=1003">
+  <link rel="stylesheet" href="/css/pages/jobs.css?v=1003"> <!-- For job cards & skeletons -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('blorework_theme');
+        document.documentElement.setAttribute('data-theme', (t === 'dark' || t === 'light') ? t : 'light');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <header id="navbar-root"></header>
 
   <main>
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero__inner">
-        <p class="hero__eyebrow">NEW JOBS ADDED DAILY IN BANGALORE</p>
-        <h1 class="hero__title">Find Nearby Daily Work. Hire Workers in <span class="gradient-text">Minutes.</span></h1>
-        <p class="hero__lead">Workers find work today, tomorrow, or this weekend. Businesses hire in minutes.</p>
-        <form class="hero__search" onsubmit="event.preventDefault()">
-          <input class="hero__search-input" type="search" placeholder="Job title or category" aria-label="Search jobs">
-          <button class="btn btn-primary" type="submit">Search</button>
-        </form>
-        <div class="hero__chips">
-          <button class="chip">Today</button>
-          <button class="chip">Tomorrow</button>
-          <button class="chip">This Weekend</button>
-          <button class="chip">Nearby Jobs</button>
+      <p class="hero__eyebrow">NEW JOBS ADDED DAILY IN BANGALORE</p>
+      <h1 class="hero__title">Find Nearby Daily Work.<br>Hire Workers in Minutes.</h1>
+      <p class="hero__lead">Workers find work today, tomorrow, or this weekend. Businesses hire in minutes.</p>
+      
+      <form class="hero__search" id="hero-search-form">
+        <input class="hero__search-input" type="search" id="hero-search-input" placeholder="Job title or category">
+        <button class="btn btn-primary" type="submit" style="border-radius: 99px; padding: 0 24px;">Search</button>
+      </form>
+      
+      <div class="hero__chips">
+        <a href="/pages/jobs/index.html?filter=today" class="chip">Today</a>
+        <a href="/pages/jobs/index.html?filter=tomorrow" class="chip">Tomorrow</a>
+        <a href="/pages/jobs/index.html?filter=weekend" class="chip">This Weekend</a>
+        <a href="/pages/jobs/index.html?filter=nearby" class="chip">Nearby Jobs</a>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section-padding">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <h2>How BloreWork Works</h2>
+      </div>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-icon-wrap"><i data-lucide="hard-hat" class="icon"></i></div>
+          <h3>For Workers</h3>
+          <p>Create a free profile, browse jobs near you, and instantly connect with employers on WhatsApp.</p>
+          <a href="/pages/auth/register.html?role=worker" class="btn btn-secondary btn-block">Find Work</a>
         </div>
+        <div class="how-card">
+          <div class="how-icon-wrap"><i data-lucide="building-2" class="icon"></i></div>
+          <h3>For Clients</h3>
+          <p>Post a job in minutes, see who is interested, view their ratings, and hire the perfect worker.</p>
+          <a href="/pages/auth/register.html?role=client" class="btn btn-primary btn-block">Hire Workers</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BROWSE CATEGORIES -->
+    <section style="background: var(--color-bg); padding: 48px 16px;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 32px;">
+          <h2>Browse by Category</h2>
+        </div>
+        <div class="category-grid">
+          <a href="/pages/jobs/index.html?category=event-staff" class="category-card"><i data-lucide="party-popper" class="icon"></i> Event Staff</a>
+          <a href="/pages/jobs/index.html?category=hotel-restaurant" class="category-card"><i data-lucide="utensils" class="icon"></i> Hotel & Restaurant</a>
+          <a href="/pages/jobs/index.html?category=catering" class="category-card"><i data-lucide="chef-hat" class="icon"></i> Catering</a>
+          <a href="/pages/jobs/index.html?category=housekeeping" class="category-card"><i data-lucide="sparkles" class="icon"></i> Housekeeping</a>
+          <a href="/pages/jobs/index.html?category=delivery" class="category-card"><i data-lucide="truck" class="icon"></i> Delivery</a>
+          <a href="/pages/jobs/index.html?category=security" class="category-card"><i data-lucide="shield" class="icon"></i> Security</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECENT JOBS -->
+    <section class="section-padding recent-jobs" aria-labelledby="recent-jobs-title">
+      <div class="section-head">
+        <div class="section-head__text">
+          <h2 class="section-head__title" id="recent-jobs-title">Recent Jobs</h2>
+          <p class="section-head__sub">Fresh openings from businesses across Bengaluru.</p>
+        </div>
+        <a href="/pages/jobs/index.html" class="section-head__link">
+          View all jobs <i data-lucide="arrow-right" class="icon"></i>
+        </a>
+      </div>
+      <div id="home-jobs-grid" class="jobs-grid jobs-grid--home">
+        <!-- JS injects skeletons, then job cards -->
       </div>
     </section>
   </main>
 
   <footer id="footer-root"></footer>
   <nav id="bottom-nav-root"></nav>
-
-  <script type="module" src="/js/pages/home.js"></script>
+  
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+  <script type="module" src="/js/pages/home.js?v=1003"></script>
+  <script type="module" src="/js/components/pwa.js"></script>
 </body>
 </html>

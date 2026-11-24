@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#0018E8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  <main class="auth-container" style="text-align: center;">
+    <div>
+      <h1 style="font-size: 6rem; color: var(--color-primary); margin-bottom: 1rem;">404</h1>
+      <h2 style="margin-bottom: 1rem;">Oops! Page not found.</h2>
+      <p class="text-muted" style="margin-bottom: 2rem;">The page you are looking for doesn't exist or has been moved.</p>
+      <a href="/" class="btn btn-primary">Go back Home</a>
+    </div>
+  </main>
+  <script type="module">
+    import { initNavbar } from '/js/components/navbar.js';
+    initNavbar();
+  </script>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

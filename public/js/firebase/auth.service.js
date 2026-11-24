@@ -1,5 +1,4 @@
-// Auth API for the whole app. Callers import from here — never from the Firebase SDK directly.
-
+// Auth API for the whole app.
 import { getFirebase } from './firebase.service.js';
 import { isConfigured } from './firebase-config.js';
 
@@ -7,8 +6,6 @@ const SDK = 'https://www.gstatic.com/firebasejs/10.13.0';
 
 export function isAuthConfigured() { return isConfigured(); }
 
-// Subscribe to auth state. Always calls back at least once (null when signed out).
-// In unconfigured mode, calls back with null immediately and returns a no-op unsubscribe.
 export async function onAuthChange(callback) {
   if (!isConfigured()) { callback(null); return () => {}; }
   const [{ auth }, authMod] = await Promise.all([getFirebase(), import(`${SDK}/firebase-auth.js`)]);
@@ -21,7 +18,6 @@ export async function signOut() {
   await authMod.signOut(auth);
 }
 
-// Reads role from the ID token's custom claims (set server-side; user cannot self-assign).
 export async function getCurrentUserRole() {
   if (!isConfigured()) return null;
   const { auth } = await getFirebase();
@@ -37,10 +33,18 @@ export async function signInWithGoogle() {
   return authMod.signInWithPopup(auth, provider);
 }
 
-// Returns a ConfirmationResult. Element id must exist in the DOM.
 export async function startPhoneOTP(phoneNumber, recaptchaContainerId) {
   const [{ auth }, authMod] = await Promise.all([getFirebase(), import(`${SDK}/firebase-auth.js`)]);
+  
+  const container = document.getElementById(recaptchaContainerId);
+  if (container) container.innerHTML = '';
+  if (window.recaptchaVerifier) {
+    try { window.recaptchaVerifier.clear(); } catch(e) {}
+    window.recaptchaVerifier = null;
+  }
+
   const verifier = new authMod.RecaptchaVerifier(auth, recaptchaContainerId, { size: 'invisible' });
+  window.recaptchaVerifier = verifier;
   return authMod.signInWithPhoneNumber(auth, phoneNumber, verifier);
 }
 

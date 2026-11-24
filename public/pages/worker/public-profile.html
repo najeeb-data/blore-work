@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#0018E8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Profile — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  <main class="auth-container" style="align-items: flex-start; padding-top: 3rem;">
+    <div class="auth-card" style="max-width: 500px; text-align: center;" id="profile-card">
+      <p class="text-muted">Loading profile...</p>
+    </div>
+  </main>
+  <script type="module" src="/js/pages/public-profile.page.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

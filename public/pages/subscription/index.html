@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#0018E8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscriptions — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  <main class="auth-container" style="align-items: flex-start; padding-top: 3rem;">
+    <div class="auth-card" style="max-width: 500px; text-align: center;">
+      <h1 class="auth-title" id="sub-title">Upgrade Your Account</h1>
+      <p class="auth-subtitle" id="sub-desc">Choose a plan to unlock all features.</p>
+      
+      <div class="card mb-4" style="border: 2px solid var(--color-primary);">
+        <h2 id="plan-price" style="color: var(--color-primary); font-size: 2.5rem; margin: 1rem 0;">₹--</h2>
+        <p class="text-muted" id="plan-desc">per month</p>
+        
+        <ul style="text-align: left; margin: 2rem 0; padding-left: 1.5rem; line-height: 1.8;">
+          <li id="feature-1">✅ Feature 1</li>
+          <li id="feature-2">✅ Feature 2</li>
+        </ul>
+        
+        <button id="subscribe-btn" class="btn btn-primary btn-lg btn-block">Subscribe Now</button>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="/js/pages/subscription.page.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

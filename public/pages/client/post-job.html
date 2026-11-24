@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Post a Job — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css?v=1002">
+  <link rel="stylesheet" href="/css/base/reset.css?v=1002">
+  <link rel="stylesheet" href="/css/base/typography.css?v=1002">
+  <link rel="stylesheet" href="/css/components/buttons.css?v=1002">
+  <link rel="stylesheet" href="/css/components/navbar.css?v=1002">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css?v=1002">
+  <link rel="stylesheet" href="/css/components/cards.css?v=1002">
+  <link rel="stylesheet" href="/css/pages/dashboard.css?v=1002">
+  <link rel="stylesheet" href="/css/pages/post-job.css?v=1002">
+  <link rel="stylesheet" href="/css/pages/post-job-extra.css?v=1002">
+</head>
+<body class="job-page">
+  <header id="navbar-root"></header>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <a class="dashboard-sidebar__link" href="/pages/client/profile.html"><i data-lucide="building-2" class="icon"></i> Business Profile</a>
+      <a class="dashboard-sidebar__link active" href="/pages/client/post-job.html"><i data-lucide="plus-circle" class="icon"></i> Post a Job</a>
+    </aside>
+
+    <div class="dashboard-tabs">
+      <a href="/pages/client/profile.html"><i data-lucide="building-2" class="icon"></i> Profile</a>
+      <a href="/pages/client/post-job.html" class="active"><i data-lucide="plus-circle" class="icon"></i> Post Job</a>
+    </div>
+
+    <main class="dashboard-content wp bp jp">
+      <div class="wp-header">
+        <h1 class="wp-header__title" id="page-title">Post a Job</h1>
+        <p class="wp-header__sub" id="page-sub">Fill in the details. Workers in your area will see it right away.</p>
+      </div>
+
+      <div class="jp-notice" id="form-notice" role="alert" hidden></div>
+
+      <form id="post-job-form" class="wp-form" novalidate>
+
+        <!-- ============ Job details ============ -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Job Details</h2>
+
+          <div class="wp-field">
+            <div class="bp-label-row">
+              <label class="wp-label" for="job-title">Job Title <span class="bp-req">*</span></label>
+              <span class="bp-counter" id="title-counter">0 / 80</span>
+            </div>
+            <input id="job-title" class="wp-input" type="text" maxlength="80" placeholder="e.g. Waitstaff for Wedding" autocomplete="off" required>
+            <p class="bp-error" data-error-for="job-title"></p>
+          </div>
+
+          <div class="bp-grid">
+            <div class="wp-field">
+              <label class="wp-label" for="job-category">Work Category <span class="bp-req">*</span></label>
+              <select id="job-category" class="wp-input bp-select" required>
+                <option value="">Loading categories…</option>
+              </select>
+              <p class="bp-error" data-error-for="job-category"></p>
+            </div>
+
+            <div class="wp-field">
+              <label class="wp-label" for="job-worktype">Work Type <span class="bp-req">*</span></label>
+              <select id="job-worktype" class="wp-input bp-select" required>
+                <option value="">Loading work types…</option>
+              </select>
+              <p class="bp-error" data-error-for="job-worktype"></p>
+            </div>
+          </div>
+
+          <div class="wp-field">
+            <div class="bp-label-row">
+              <label class="wp-label" for="job-desc">Job Description <span class="bp-req">*</span></label>
+              <span class="bp-counter" id="desc-counter">0 / 1000</span>
+            </div>
+            <textarea id="job-desc" class="wp-input bp-textarea" rows="4" maxlength="1000"
+              placeholder="Describe the work, dress code, timings and any requirements…" required></textarea>
+            <p class="bp-error" data-error-for="job-desc"></p>
+          </div>
+        </section>
+
+        <!-- ============ Schedule & pay ============ -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Schedule &amp; Pay</h2>
+
+          <div class="bp-grid jp-pair">
+            <div class="wp-field">
+              <label class="wp-label" for="job-date">Date <span class="bp-req">*</span></label>
+              <input id="job-date" class="wp-input jp-date" type="date" required>
+              <p class="bp-error" data-error-for="job-date"></p>
+            </div>
+            <div class="wp-field">
+              <label class="wp-label" for="job-time">Start Time <span class="bp-req">*</span></label>
+              <input id="job-time" class="wp-input jp-date" type="time" required>
+              <p class="bp-error" data-error-for="job-time"></p>
+            </div>
+          </div>
+
+          <div class="bp-grid jp-pair">
+            <div class="wp-field">
+              <label class="wp-label" for="job-workers">Workers Needed <span class="bp-req">*</span></label>
+              <input id="job-workers" class="wp-input" type="number" inputmode="numeric" min="1" max="500" step="1" value="1" required>
+              <p class="bp-error" data-error-for="job-workers"></p>
+            </div>
+            <div class="wp-field">
+              <label class="wp-label" for="job-pay">Pay per day (₹) <span class="bp-req">*</span></label>
+              <div class="jp-money">
+                <span class="jp-money__symbol" aria-hidden="true">₹</span>
+                <input id="job-pay" class="wp-input jp-money__input" type="number" inputmode="numeric" min="1" max="100000" step="1" placeholder="800" required>
+              </div>
+              <p class="bp-error" data-error-for="job-pay"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Location ============ -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Location</h2>
+
+          <div class="wp-field">
+            <label class="wp-label" for="job-location">Location (Area) <span class="bp-req">*</span></label>
+            <select id="job-location" class="wp-input bp-select" required>
+              <option value="">Loading areas…</option>
+            </select>
+            <p class="wp-hint">Areas are grouped by region of Bengaluru.</p>
+            <p class="bp-error" data-error-for="job-location"></p>
+          </div>
+        </section>
+
+        <div class="wp-submit">
+          <button class="btn btn-primary btn-block wp-save" type="submit" id="publish-btn">
+            <span class="wp-save__spinner" aria-hidden="true"></span>
+            <span class="wp-save__label">Publish Job</span>
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <nav id="bottom-nav-root"></nav>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script type="module" src="/js/pages/post-job.page.js?v=1002"></script>
+</body>
+</html>

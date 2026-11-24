@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Job Details — BloreWork</title>
+  <meta name="description" id="page-description" content="View job details on BloreWork.">
+  
+  <!-- Fix Favicon 404 -->
+  <link rel="icon" href="/assets/icons/favicon.ico">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" id="og-title" content="Job Opening at BloreWork">
+  <meta property="og:description" id="og-description" content="Find Nearby Daily Work.">
+  <meta property="og:image" id="og-image" content="https://bloreworks.web.app/assets/logo.png">
+  <meta property="og:url" id="og-url" content="https://bloreworks.web.app">
+  <meta property="og:type" content="website">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+  <link rel="stylesheet" href="/css/components/float-btn.css">
+  <link rel="stylesheet" href="/css/pages/job-details.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  
+  <main class="details-container" id="job-content">
+    <!-- Content will be rendered by JS -->
+    <div class="skeleton-card" style="height: 200px;"></div>
+  </main>
+
+  <nav id="bottom-nav-root"></nav>
+  
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <!-- Bumped to v=5 to force cache clear -->
+  <script type="module" src="/js/pages/job-details.page.js?v=5"></script>
+</body>
+</html>

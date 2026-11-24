@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Dashboard — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+  <link rel="stylesheet" href="/css/components/float-btn.css">
+  <link rel="stylesheet" href="/css/pages/dashboard.css">
+  <style>
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .stat-card { background: var(--color-surface); padding: 20px 16px; border-radius: 12px; border: 1px solid var(--color-border); text-align: center; }
+    .stat-value { font-size: 24px; font-weight: 700; color: var(--color-primary); margin-bottom: 4px; }
+    .stat-label { color: var(--color-text-muted); font-size: 13px; font-weight: 500; }
+    .admin-table { width: 100%; text-align: left; border-collapse: collapse; font-size: 14px; }
+    .admin-table th, .admin-table td { padding: 12px 8px; border-bottom: 1px solid var(--color-border); }
+    .admin-table th { background: var(--color-bg); color: var(--color-text-muted); font-weight: 500; font-size: 12px; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <header id="navbar-root"></header>
+  
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <a class="dashboard-sidebar__link active" href="/pages/client/dashboard.html"><i data-lucide="layout-dashboard" class="icon"></i> Overview</a>
+      <a class="dashboard-sidebar__link" href="/pages/client/profile.html"><i data-lucide="building" class="icon"></i> Business Profile</a>
+      <a class="dashboard-sidebar__link" href="/pages/client/post-job.html"><i data-lucide="plus-circle" class="icon"></i> Post a Job</a>
+    </aside>
+
+    <div class="dashboard-tabs">
+      <a href="/pages/client/dashboard.html" class="active"><i data-lucide="layout-dashboard" class="icon"></i> Overview</a>
+      <a href="/pages/client/profile.html"><i data-lucide="building" class="icon"></i> Profile</a>
+      <a href="/pages/client/post-job.html"><i data-lucide="plus-circle" class="icon"></i> Post Job</a>
+    </div>
+
+    <main class="dashboard-content">
+      <div class="dashboard-header">
+        <h1>Welcome, <span id="client-name">Client</span></h1>
+        <a href="/pages/client/post-job.html" class="btn btn-primary">+ Post a Job</a>
+      </div>
+
+      <div class="stat-grid" id="client-stats">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-active-jobs">-</div>
+          <div class="stat-label">Active Jobs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-views">-</div>
+          <div class="stat-label">Total Views</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-interested">-</div>
+          <div class="stat-label">Interested</div>
+        </div>
+      </div>
+
+      <div class="card" style="overflow-x: auto;">
+        <p class="text-muted">Loading your jobs...</p>
+      </div>
+    </main>
+  </div>
+  
+  <nav id="bottom-nav-root"></nav>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+  <script type="module" src="/js/pages/client-dashboard.page.js"></script>
+</body>
+</html>

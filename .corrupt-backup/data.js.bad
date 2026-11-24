@@ -1,0 +1,17 @@
+export const WORK_CATEGORIES = [
+  "Catering Services", "ODC / Outdoor Catering", "Event Management", 
+  "Notice / Pamphlet Distribution", "Marketing / Promotion", 
+  "Housekeeping", "Hotel Work", "Warehouse", "Retail", 
+  "Office Support", "Delivery", "Security", "Manpower", 
+  "Construction", "Hospitality", "Sales", "Logistics"
+];
+
+export const WORK_TYPES = [
+  "Daily Work", "Weekly Work", "Part-Time", "Full-Time", 
+  "One-Day Event", "Weekend Work", "Night Shift", "Monthly Contract", "Temporary Work"
+];
+
+export const BANGALORE_LOCATIONS = {
+  "Central Bangalore": ["MG Road", "Brigade Road", "Indiranagar", "Ulsoor", "Shivajinagar", "Commercial Street", "Richmond Town", "Frazer Town", "Koramangala", "Domlur", "Residency Road"],
+  "East Bangalore": ["Whitefield", "Marathahalli", "Brookefield", "Hoodi", "KR Puram", "Mahadevapura", "Bellandur", "Varthur", "Sarjapur Road", "KAdugodi", "ITPL", "CV Raman Nagar"],
+  "North Bangalore": ["Hebbal", "Yelahanka", "Jakkur", "Thanisandra", "Hennur", "Nagawara", "RTÈ˜YØ\ˆ‹”ØZZØ\˜H˜YØ\ˆ‹‘]˜[˜Z[H‹˜YØ[\ˆ‹“X[X]HXÚ\šÈ—Kˆ”Ûİ]˜[™Ø[Ü™HˆÈ’˜^X[˜YØ\ˆ‹’”˜YØ\ˆ‹•H^[İ]‹’Ôˆ^[İ]‹‘[Xİ›ÛšXÈÚ]H‹˜[˜\Ú[šØ\šH‹˜\Ø]˜[˜YİYH‹˜[›™\™Ú]H›ØY‹›Û[X[˜Z[H‹\™ZÙ\™H‹’[[X]H‹™Yİ\ˆ—Kˆ•Ù\İ˜[™Ø[Ü™HˆÈ”˜Z˜Zš[˜YØ\ˆ‹•šZ˜^X[˜YØ\ˆ‹˜\Ø]™\ÚØ\˜[˜YØ\ˆ‹“X[\ÚØ\˜[H‹–Y\ÚØ[\ˆ‹”Y[XH‹“˜YØ\˜š]šH‹’Ù[™Ù\šH‹””ˆ˜YØ\ˆ‹“XYØYH›ØY—Kˆ“İ]\ˆ˜[™Ø[Ü™HˆÈ[™ZØ[‹]X™[H‹›Û[X\Ø[™˜H‹’šYØ[šH‹Ú[™\\˜H‹’ÜÚÛİH‹“™[[X[™Ø[H‹‘ÙX˜[\\ˆ‹”Ø\š˜\\˜H‹’Ûİ[\ˆ—BŸN

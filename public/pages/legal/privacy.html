@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#0018E8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/footer.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  <main class="jobs-container" style="max-width: 800px; padding-top: 3rem; padding-bottom: 5rem;">
+    <h1>Privacy Policy</h1>
+    <p class="text-muted" style="margin-bottom: 2rem;">Last updated: October 2026</p>
+    
+    <h3>1. Information We Collect</h3>
+    <p style="margin-bottom: 1rem;">We collect your name, phone number, and email when you register. If you are a client, we also collect your business address and details. If you are a worker, we collect your skills and experience.</p>
+    
+    <h3>2. How We Use Your Data</h3>
+    <p style="margin-bottom: 1rem;">Your phone number is shared with clients when you click "Chat on WhatsApp" to apply for a job. We do not sell your data to third parties.</p>
+    
+    <h3>3. Security</h3>
+    <p style="margin-bottom: 1rem;">Your data is stored securely in Google Firebase. We use industry-standard security rules to protect your information.</p>
+    
+    <h3>4. Contact</h3>
+    <p>If you have any questions, contact us at support@bloreworks.web.app.</p>
+  </main>
+  <script type="module">
+    import { initNavbar } from '/js/components/navbar.js';
+    import { initFooter } from '/js/components/footer.js';
+    initNavbar(); initFooter();
+  </script>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

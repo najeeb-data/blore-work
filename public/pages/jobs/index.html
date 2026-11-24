@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Find Jobs — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css?v=1003">
+  <link rel="stylesheet" href="/css/base/reset.css?v=1003">
+  <link rel="stylesheet" href="/css/base/typography.css?v=1003">
+  <link rel="stylesheet" href="/css/components/buttons.css?v=1003">
+  <link rel="stylesheet" href="/css/components/navbar.css?v=1003">
+  <link rel="stylesheet" href="/css/components/footer.css?v=1003">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css?v=1003">
+  <link rel="stylesheet" href="/css/components/float-btn.css?v=1003">
+  <link rel="stylesheet" href="/css/pages/jobs.css?v=1003">
+</head>
+<body>
+  <header id="navbar-root"></header>
+
+  <main class="page-container jobs-page">
+    <div class="jobs-header">
+      <h1 class="jobs-header__title">Find Jobs</h1>
+      <p class="jobs-header__sub">Daily, part-time and event work from businesses across Bengaluru.</p>
+    </div>
+
+    <div class="jobs-toolbar">
+      <div class="search-box jobs-search">
+        <i data-lucide="search" class="icon"></i>
+        <input type="search" id="job-search" placeholder="Search title, category or area" autocomplete="off" enterkeyhint="search" aria-label="Search jobs">
+      </div>
+      <div class="jobs-toolbar__selects">
+        <label class="visually-hidden" for="category-select">Category</label>
+        <select id="category-select" class="sort-select jobs-select">
+          <option value="">All categories</option>
+        </select>
+        <label class="visually-hidden" for="sort-select">Sort jobs</label>
+        <select id="sort-select" class="sort-select jobs-select">
+          <option value="newest">Newest first</option>
+          <option value="pay-high">Highest pay</option>
+          <option value="pay-low">Lowest pay</option>
+          <option value="soonest">Starting soonest</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="chips-container" id="filter-chips" role="group" aria-label="Filter jobs">
+      <button type="button" class="chip active" data-when="all" aria-pressed="true">All Jobs</button>
+      <button type="button" class="chip" data-when="today" aria-pressed="false">Today</button>
+      <button type="button" class="chip" data-when="tomorrow" aria-pressed="false">Tomorrow</button>
+      <button type="button" class="chip" data-when="weekend" aria-pressed="false">This Weekend</button>
+      <button type="button" class="chip chip--pref" id="interested-btn" aria-pressed="false">
+        <i data-lucide="star" class="chip__icon"></i> My Preferences
+      </button>
+    </div>
+
+    <div class="jobs-results-bar">
+      <p class="jobs-count" id="jobs-count" aria-live="polite">Loading jobs…</p>
+      <button type="button" class="jobs-clear" id="clear-filters" hidden>Clear filters</button>
+    </div>
+
+    <div id="jobs-grid" class="jobs-grid"></div>
+
+    <div class="jobs-more">
+      <button type="button" class="btn btn-secondary jobs-more__btn" id="load-more" hidden>Load more jobs</button>
+    </div>
+  </main>
+
+  <footer id="footer-root"></footer>
+  <nav id="bottom-nav-root"></nav>
+
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+  <script type="module" src="/js/pages/jobs.page.js?v=1003"></script>
+</body>
+</html>

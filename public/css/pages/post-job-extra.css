@@ -1,0 +1,79 @@
+/* Extra styles for the new Post a Job fields */
+.job-page{
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* iPhone: 16px stops zoom when tapping a field */
+.job-page .form-input,
+.job-page .form-select,
+.job-page .form-textarea{
+  font-size:16px;
+  min-height:48px;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.job-page .form-textarea{min-height:96px}
+.job-page .form-select{padding-right:36px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center}
+
+/* Date and time inputs look the same on Android and iPhone */
+.job-page input[type=date],
+.job-page input[type=time]{min-width:0;display:block}
+
+/* Back link */
+.job-page .back-link{
+  display:inline-flex;align-items:center;min-height:44px;margin:0 0 4px;padding:0;
+  background:none;border:0;color:#263FE5;font:600 14px 'Inter',sans-serif;cursor:pointer;
+}
+
+/* Hints and small text */
+.job-page .form-hint{margin:6px 0 0;font-size:12px;line-height:1.4;color:#6B7280}
+.job-page .optional{font-weight:400;color:#6B7280;font-size:13px}
+
+/* Checkbox chips (Urgent, Food, Pick & drop) */
+.job-page .chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.job-page .check-chip{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 16px;border:1px solid #E5E7EB;border-radius:12px;
+  background:#fff;color:#17203A;font-size:15px;font-weight:500;cursor:pointer;
+}
+.job-page .check-chip input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.job-page .check-chip:has(input:checked){background:#EEF1FE;border-color:#263FE5;color:#263FE5;font-weight:600}
+.job-page .check-chip:has(input:focus-visible){outline:3px solid rgba(38,63,229,.35);outline-offset:2px}
+
+/* Extra days */
+.job-page .extra-dates{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.job-page .extra-dates:empty{display:none}
+.job-page .extra-date-row{display:flex;gap:8px;align-items:center}
+.job-page .extra-date-row .form-input{flex:1}
+.job-page .remove-date{
+  flex:0 0 48px;height:48px;border:1px solid #E5E7EB;border-radius:12px;background:#fff;
+  color:#6B7280;font-size:22px;line-height:1;cursor:pointer;
+}
+.job-page .link-btn{
+  background:none;border:0;padding:8px 0;min-height:44px;color:#263FE5;
+  font:600 14px 'Inter',sans-serif;cursor:pointer;
+}
+
+/* More details */
+.job-page .more-toggle{
+  display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;
+  margin:8px 0 16px;padding:0 14px;background:#fff;border:1px solid #E5E7EB;border-radius:12px;
+  color:#17203A;font:600 15px 'Inter',sans-serif;cursor:pointer;
+}
+.job-page .more-toggle__arrow{transition:transform .15s;color:#6B7280}
+.job-page .more-toggle.is-open .more-toggle__arrow{transform:rotate(180deg)}
+.job-page .more-details[hidden]{display:none}
+
+/* Publish button: full width, easy to tap */
+.job-page .btn-primary{width:100%;min-height:48px;font-size:15px;font-weight:600}
+.job-page .btn-primary:disabled{opacity:.6}
+
+@media (max-width:360px){
+  .job-page .check-chip{padding:0 12px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .job-page .more-toggle__arrow{transition:none}
+}

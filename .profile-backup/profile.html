@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FORCE CACHE CLEAR v=999 -->
+  <link rel="stylesheet" href="/css/base/variables.css?v=999">
+  <link rel="stylesheet" href="/css/base/reset.css?v=999">
+  <link rel="stylesheet" href="/css/base/typography.css?v=999">
+  <link rel="stylesheet" href="/css/components/buttons.css?v=999">
+  <link rel="stylesheet" href="/css/components/navbar.css?v=999">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css?v=999">
+  <link rel="stylesheet" href="/css/components/cards.css?v=999">
+  <link rel="stylesheet" href="/css/pages/dashboard.css?v=999">
+  
+  <!-- Inline style to guarantee dropdown visibility -->
+  <style>
+    .suggestions-box {
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      background: #ffffff !important;
+      border: 1px solid #E5E7EB !important;
+      border-radius: 8px !important;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+      max-height: 250px !important;
+      overflow-y: auto !important;
+      z-index: 99999 !important;
+      display: none;
+    }
+    .suggestions-box.active {
+      display: block !important;
+    }
+    .suggestion-item {
+      padding: 14px 16px !important;
+      cursor: pointer !important;
+      font-size: 15px !important;
+      color: #17203A !important;
+      border-bottom: 1px solid #F3F4F6 !important;
+      background: #ffffff;
+    }
+    .suggestion-item:active {
+      background: #EEF1FE !important;
+      color: #263FE5 !important;
+    }
+  </style>
+</head>
+<body>
+  <header id="navbar-root"></header>
+  
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <a class="dashboard-sidebar__link active" href="/pages/worker/profile.html"><i data-lucide="user" class="icon"></i> My Profile</a>
+      <a class="dashboard-sidebar__link" href="/pages/worker/saved.html"><i data-lucide="bookmark" class="icon"></i> Saved Jobs</a>
+      <a class="dashboard-sidebar__link" href="/pages/jobs/index.html"><i data-lucide="search" class="icon"></i> Find Jobs</a>
+    </aside>
+
+    <div class="dashboard-tabs">
+      <a href="/pages/worker/profile.html" class="active"><i data-lucide="user" class="icon"></i> Profile</a>
+      <a href="/pages/worker/saved.html"><i data-lucide="bookmark" class="icon"></i> Saved</a>
+      <a href="/pages/jobs/index.html"><i data-lucide="search" class="icon"></i> Find Jobs</a>
+    </div>
+
+    <main class="dashboard-content">
+      <div class="dashboard-header"><h1>My Profile</h1></div>
+
+      <div class="card">
+        <form id="profile-form">
+          
+          <div class="profile-header">
+            <img id="photo-preview" src="/assets/icons/company-placeholder.png" class="profile-avatar">
+            <input type="file" id="photo-input" accept="image/*" style="display: none;">
+            
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+              <button type="button" class="edit-photo-link" onclick="document.getElementById('photo-input').click()">
+                Edit profile photo
+              </button>
+              <span style="color: var(--color-border);">|</span>
+              <button type="button" id="share-profile-btn" class="edit-photo-link">
+                <i data-lucide="share-2" style="width:14px; height:14px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Share Profile
+              </button>
+            </div>
+          </div>
+
+          <h2 class="section-title">Personal Information</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="worker-name">Full Name</label>
+              <input id="worker-name" class="form-input" type="text" placeholder="Najeeb" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="worker-age">Age</label>
+              <input id="worker-age" class="form-input" type="number" placeholder="21" min="16" max="80">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="worker-phone">Phone Number</label>
+            <input id="worker-phone" class="form-input" type="tel" placeholder="+91 96051 42422">
+          </div>
+
+          <h2 class="section-title">Skills</h2>
+          
+          <div class="form-group">
+            <input id="worker-skills" class="form-input" type="text" placeholder="e.g. Waiter, Bartender">
+          </div>
+
+          <h2 class="section-title">Interested Categories</h2>
+          
+          <div class="form-group">
+            <div id="selected-cats" class="tags-container"></div>
+            <div class="search-wrapper" style="position: relative;">
+              <input type="text" id="search-cats" class="form-input" placeholder="Type to search categories..." autocomplete="off">
+              <div id="suggest-cats" class="suggestions-box"></div>
+            </div>
+          </div>
+
+          <h2 class="section-title">Preferred Locations</h2>
+          
+          <div class="form-group">
+            <div id="selected-locs" class="tags-container"></div>
+            <div class="search-wrapper" style="position: relative;">
+              <input type="text" id="search-locs" class="form-input" placeholder="Type to search locations..." autocomplete="off">
+              <div id="suggest-locs" class="suggestions-box"></div>
+            </div>
+          </div>
+          
+          <h2 class="section-title">Experience (Years)</h2>
+
+          <div class="form-group">
+            <input id="worker-exp" class="form-input" type="number" placeholder="e.g. 2">
+          </div>
+          
+          <button class="btn btn-primary btn-block" style="margin-top: 24px;" type="submit" id="save-btn">Save Profile</button>
+        </form>
+      </div>
+    </main>
+  </div>
+  
+  <nav id="bottom-nav-root"></nav>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <!-- FORCE CACHE CLEAR v=999 -->
+  <script type="module" src="/js/pages/worker-profile.page.js?v=999"></script>
+</body>
+</html>

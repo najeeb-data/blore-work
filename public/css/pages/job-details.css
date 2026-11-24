@@ -1,0 +1,53 @@
+/* Layout */
+.details-container {
+  max-width: 800px; margin: 0 auto; padding: 24px 16px 80px;
+}
+.back-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--color-text-muted); font-weight: 500; text-decoration: none;
+  margin-bottom: 24px; font-size: 14px;
+}
+.back-link:hover { color: var(--color-primary); }
+.back-link .icon { width: 16px; height: 16px; }
+
+/* Main Card */
+.main-card { margin-bottom: 16px; }
+.main-card .title { font-size: 24px; margin-bottom: 8px; }
+.main-card .category { font-size: 14px; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
+.main-card .salary { font-size: 20px; font-weight: 700; color: var(--color-primary); margin-bottom: 16px; }
+
+/* Meta Tags */
+.meta-tags { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 16px; border-top: 1px solid var(--color-border); }
+.meta-tags span { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--color-text); background: var(--color-bg); padding: 6px 12px; border-radius: 8px; }
+.meta-tags .icon { width: 16px; height: 16px; color: var(--color-primary); }
+
+/* Sections */
+.section-card { margin-bottom: 16px; }
+.section-card h2 { font-size: 16px; margin-bottom: 12px; border-bottom: 1px solid var(--color-border); padding-bottom: 8px; }
+.section-card p { white-space: pre-wrap; line-height: 1.6; }
+
+/* Requirement List */
+.req-list { display: flex; flex-direction: column; gap: 8px; }
+.req-list span { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.req-list .icon { width: 16px; height: 16px; color: var(--color-text-muted); }
+
+/* Client Box */
+.client-box { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.client-box:hover .client-name { color: var(--color-primary); text-decoration: underline; }
+.client-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--color-primary-soft); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-weight: 700; font-size: 18px; }
+.client-name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.client-rating { font-size: 13px; color: var(--color-text-muted); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+
+/* Action Buttons */
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.btn-whatsapp {
+  grid-column: 1 / -1;
+  background: #25D366; /* Official WhatsApp Green */
+  color: white; border: 1px solid #25D366;
+}
+.btn-whatsapp:hover:not(:disabled) { background: #1DA851; border-color: #1DA851; }
+.btn-save, .btn-share { width: 100%; }
+
+/* Expired Warning */
+.expired-warning { background: #FEE4E2; color: #B42318; padding: 16px; border-radius: 12px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.expired-warning .icon { width: 20px; height: 20px; }

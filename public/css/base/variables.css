@@ -1,178 +1,54 @@
-/* ==========================================================================
-   BloreWork design tokens
-   ========================================================================== */
 :root {
-  color-scheme: light;
+  /* Brand Colors */
+  --color-primary: #263FE5;
+  --color-primary-hover: #1E33C6;
+  --color-primary-soft: #EEF1FE;
+  
+  /* Surfaces & Backgrounds */
+  --color-bg: #F5F6FA;
+  --color-surface: #FFFFFF;
+  
+  /* Text */
+  --color-text: #17203A;
+  --color-text-muted: #6B7280;
+  --color-text-subtle: #9CA3AF;
+  
+  /* Borders & Lines */
+  --color-border: #E5E7EB;
+  
+  /* Status */
+  --color-success: #16A34A;
+  --color-error: #DC2626;
+  --color-warning: #F59E0B;
 
-  /* --- LAYOUT & TYPOGRAPHY (Restored) --- */
-  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  /* Typography */
+  --font-heading: 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   
+  /* Spacing */
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
-  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-12: 3rem; --space-16: 4rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-12: 3rem;
   
-  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 20px; --radius-pill: 999px;
-  --touch-target: 44px;
+  /* Radius */
+  --radius-sm: 8px; 
+  --radius-md: 12px; 
+  --radius-lg: 16px; 
+  --radius-pill: 999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+  
+  /* Layout */
   --container: 1120px;
-  --container-pad: 1rem;
-
-  /* ---- Brand blue: actions, selection, links ---------------------------- */
-  --color-primary:              #0018E8;
-  --color-primary-hover:        #0015CC;
-  --color-primary-pressed:      #0012B0;
-  --color-primary-disabled:     #D5D9F7;
-  --color-on-primary:           #FFFFFF;
-  --color-on-primary-disabled:  #6E76B8;
-  --color-primary-ink:          #0018E8;
-  --color-primary-container:    #E5E8FF;
-  --color-on-primary-container: #000A66;
-
-  /* ---- Brand green: positive status only -------------------------------- */
-  --color-accent:               #0AB78D;
-  --color-on-accent:            #033025;
-  --color-accent-strong:        #067459;
-  --color-accent-container:     #DCF9F2;
-  --color-on-accent-container:  #044E3B;
-
-  /* ---- Surfaces --------------------------------------------------------- */
-  --color-bg:                   #F6F7FD;
-  --color-surface:              #FFFFFF;
-  --color-surface-alt:          #EDEFFB;
-  --color-scrim:                rgba(9, 13, 32, 0.52);
-
-  /* ---- Text ------------------------------------------------------------- */
-  --color-text:                 #0B1030;
-  --color-text-muted:           #454C73;
-  --color-text-subtle:          #636A8F;
-
-  /* ---- Lines ------------------------------------------------------------ */
-  --color-border:               #DCDFF1;
-  --color-border-strong:        #7F86AD;
-  --color-divider:              #E8EAF6;
-
-  /* ---- Status ----------------------------------------------------------- */
-  --color-success:              var(--color-accent-strong);
-  --color-success-container:    var(--color-accent-container);
-  --color-on-success-container: var(--color-on-accent-container);
-  --color-info:                 var(--color-primary-ink);
-  --color-info-container:       var(--color-primary-container);
-  --color-on-info-container:    var(--color-on-primary-container);
-  --color-warning:              #F59E0B;
-  --color-warning-text:         #B54708;
-  --color-warning-container:    #FEF0C7;
-  --color-on-warning-container: #7A2E0E;
-  --color-error:                #D92D20;
-  --color-error-text:           #B42318;
-  --color-error-container:      #FEE4E2;
-  --color-on-error-container:   #7A271A;
-
-  /* ---- Focus and elevation ---------------------------------------------- */
-  --color-focus:                var(--color-primary-ink);
-  --focus-ring:                 2px solid var(--color-focus);
-  --shadow-sm:                  0 1px 2px rgba(11, 16, 48, 0.06);
-  --shadow-md:                  0 4px 16px rgba(11, 16, 48, 0.08);
-  --shadow-lg:                  0 12px 32px rgba(11, 16, 48, 0.16);
-
-  /* ---- Component aliases ------------------------------------------------ */
-  --btn-primary-bg:             var(--color-primary);
-  --btn-primary-bg-hover:       var(--color-primary-hover);
-  --btn-primary-bg-pressed:     var(--color-primary-pressed);
-  --btn-primary-bg-disabled:    var(--color-primary-disabled);
-  --btn-primary-text:           var(--color-on-primary);
-  --btn-primary-text-disabled:  var(--color-on-primary-disabled);
-  --btn-outline-text:           var(--color-primary-ink);
-  --btn-outline-border:         var(--color-primary-ink);
-  --btn-outline-bg-hover:       var(--color-primary-container);
-  --btn-ghost-text:             var(--color-text);
-  --btn-ghost-bg-hover:         var(--color-surface-alt);
-
-  --input-bg:                   var(--color-surface);
-  --input-text:                 var(--color-text);
-  --input-placeholder:          var(--color-text-subtle);
-  --input-border:               var(--color-border-strong);
-  --input-border-hover:         var(--color-text-muted);
-  --input-border-focus:         var(--color-primary-ink);
-  --input-border-error:         var(--color-error);
-  --input-bg-disabled:          var(--color-surface-alt);
-
-  --chip-bg:                    var(--color-surface);
-  --chip-text:                  var(--color-text);
-  --chip-border:                var(--color-border);
-  --chip-selected-bg:           var(--color-primary-container);
-  --chip-selected-text:         var(--color-on-primary-container);
-  --chip-selected-border:       var(--color-primary-ink);
-
-  --card-bg:                    var(--color-surface);
-  --card-border:                var(--color-border);
-  --card-shadow:                var(--shadow-sm);
-
-  --nav-bg:                     var(--color-surface);
-  --nav-border:                 var(--color-divider);
-  --nav-link:                   var(--color-text-muted);
-  --nav-link-hover:             var(--color-text);
-  --nav-item:                   var(--color-text-muted);
-  --nav-item-active:            var(--color-primary-ink);
-  --nav-indicator:              var(--color-primary-container);
-
-  --icon-default:               var(--color-text-muted);
-  --icon-active:                var(--color-primary-ink);
-  --icon-on-primary:            var(--color-on-primary);
-  --icon-accent:                var(--color-accent-strong);
-
-  --dialog-bg:                  var(--color-surface);
-  --dropdown-bg:                var(--color-surface);
-  --sheet-bg:                   var(--color-surface);
-  --overlay-scrim:              var(--color-scrim);
+  --container-pad: 16px;
 }
 
-:root[data-theme="dark"] {
-  color-scheme: dark;
-
-  --color-primary:              #384CFF;
-  --color-primary-hover:        #475AFF;
-  --color-primary-pressed:      #142CFF;
-  --color-primary-disabled:     #232B6B;
-  --color-on-primary-disabled:  #8089C6;
-  --color-primary-ink:          #8F9AFF;
-  --color-primary-container:    #141B52;
-  --color-on-primary-container: #C7CDFF;
-
-  --color-accent-strong:        #36E2B7;
-  --color-accent-container:     #0B3D30;
-  --color-on-accent-container:  #B8F5E5;
-
-  --color-bg:                   #090D20;
-  --color-surface:              #111634;
-  --color-surface-alt:          #1A2048;
-  --color-scrim:                rgba(0, 0, 0, 0.62);
-
-  --color-text:                 #EEF0FF;
-  --color-text-muted:           #AEB4DA;
-  --color-text-subtle:          #8E95C2;
-
-  --color-border:               #2A3166;
-  --color-border-strong:        #646CA3;
-  --color-divider:              #1E2450;
-
-  --color-warning:              #FDB022;
-  --color-warning-text:         #FEC84B;
-  --color-warning-container:    #3E2A06;
-  --color-on-warning-container: #FEDF89;
-  --color-error:                #F97066;
-  --color-error-text:           #FDA29B;
-  --color-error-container:      #4A1512;
-  --color-on-error-container:   #FECDCA;
-
-  --shadow-sm:                  0 1px 2px rgba(0, 0, 0, 0.40);
-  --shadow-md:                  0 4px 16px rgba(0, 0, 0, 0.45);
-  --shadow-lg:                  0 12px 32px rgba(0, 0, 0, 0.60);
-
-  --dialog-bg:                  var(--color-surface-alt);
-  --dropdown-bg:                var(--color-surface-alt);
-  --sheet-bg:                   var(--color-surface-alt);
-}
-
-:root {
-  accent-color: var(--color-primary);
+[data-theme="dark"] {
+  --color-bg: #0F111A;
+  --color-surface: #1A1D27;
+  --color-text: #F9FAFB;
+  --color-text-muted: #9CA3AF;
+  --color-border: #374151;
+  --color-primary-soft: #1E2442;
 }

@@ -1,0 +1,7 @@
+:root {
+  --blue: #263FE5;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --bg: #f9fafb;
+}
+body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); }

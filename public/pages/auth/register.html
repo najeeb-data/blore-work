@@ -1,66 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="theme-color" content="#0018E8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#263FE5">
   <title>Create Account — BloreWork</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/base/variables.css">
-  <link rel="stylesheet" href="/css/base/reset.css">
-  <link rel="stylesheet" href="/css/base/typography.css">
-  <link rel="stylesheet" href="/css/components/buttons.css">
-  <link rel="stylesheet" href="/css/components/navbar.css">
-  <link rel="stylesheet" href="/css/pages/auth.css">
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem('blorework_theme');
-        document.documentElement.setAttribute('data-theme', (t === 'dark' || t === 'light') ? t : 'light');
-      } catch (e) {}
-    })();
-  </script>
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/auth.css">
 </head>
-<body>
-  <header id="navbar-root"></header>
-  <main class="auth-container">
-    <div class="auth-card">
-      <h1 class="auth-title" id="reg-title">Create your account</h1>
-      <p class="auth-subtitle">Already have an account? <a href="/pages/auth/login.html">Log in</a></p>
-      
-      <button class="btn btn-google btn-block" style="margin-bottom: 1rem;">
-        Continue with Google
-      </button>
-      
-      <div class="auth-divider">or use your phone</div>
-
-      <form class="auth-form" onsubmit="event.preventDefault(); alert('Firebase not connected yet.');">
-        <div class="form-group">
-          <label class="form-label">Full Name</label>
-          <input class="form-input" type="text" placeholder="John Doe" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone Number</label>
-          <input class="form-input" type="tel" placeholder="+91 98765 43210" required>
-        </div>
-        <button class="btn btn-primary btn-block" type="submit">Send OTP</button>
-      </form>
-    </div>
+<body data-mode="register" class="auth-body">
+  <main class="auth-wrap">
+    <a href="/index.html" class="brand auth-brand">BloreWork</a>
+    <section class="card auth-card">
+      <h1 id="authTitle">Create Worker Account</h1>
+      <p class="muted">Already have an account? <a href="/pages/auth/login.html">Log in</a></p>
+      <div class="role-switch" role="group" aria-label="Account type">
+        <button type="button" class="chip active" data-role="worker">I want work</button>
+        <button type="button" class="chip" data-role="client">I want to hire</button>
+      </div>
+      <button type="button" class="btn btn-secondary btn-block" id="googleBtn">Continue with Google</button>
+      <div class="divider"><span>or use your phone</span></div>
+      <div class="field">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Example: 9876543210">
+        <div class="hint">We will send a 6-digit code by SMS.</div>
+      </div>
+      <div class="field" id="otpField" hidden>
+        <label for="otp">Enter OTP</label>
+        <input id="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code">
+        <div class="hint"><button type="button" class="link-btn" id="resendBtn" disabled>Resend OTP</button></div>
+      </div>
+      <div id="authMsg" class="auth-msg" role="alert" hidden></div>
+      <button type="button" class="btn btn-primary btn-block" id="sendOtpBtn">Send OTP</button>
+    </section>
   </main>
-  <script type="module">
-    import { initNavbar } from '/js/components/navbar.js';
-    initNavbar();
-
-    // Dynamically change title based on ?role=worker or ?role=client
-    const params = new URLSearchParams(window.location.search);
-    const role = params.get('role');
-    const title = document.getElementById('reg-title');
-    
-    if (role === 'worker') {
-      title.textContent = 'Create your worker account';
-    } else if (role === 'client') {
-      title.textContent = 'Create your client account';
-    }
-  </script>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script type="module" src="/js/auth-ui.js"></script>
 </body>
 </html>

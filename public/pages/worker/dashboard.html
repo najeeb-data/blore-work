@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
+  <title>Dashboard — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <style>
+    /* --- Mobile App Dashboard Styles --- */
+    body { background-color: #f8f9fa; -webkit-tap-highlight-color: transparent; padding-bottom: 80px; }
+    
+    /* Top Header */
+    .app-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; background: #ffffff; position: sticky; top: 0; z-index: 10;
+      border-bottom: 1px solid #eef0f5;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: #111827; }
+    .header-left svg { width: 24px; height: 24px; fill: #263FE5; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #eef0f5; cursor: pointer; }
+    
+    /* Main Content */
+    .dashboard-container { padding: 20px; max-width: 600px; margin: 0 auto; animation: fadeIn 0.4s ease-out; }
+    
+    .greeting-section h1 { font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #111827; display: flex; align-items: center; gap: 8px;}
+    
+    /* Stats Card */
+    .stats-card {
+      background: #ffffff; border-radius: 16px; padding: 20px; margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #eef0f5;
+    }
+    .stats-title { font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .stat-item { display: flex; flex-direction: column; gap: 4px; }
+    .stat-value { font-size: 28px; font-weight: 700; color: #263FE5; }
+    .stat-label { font-size: 13px; color: #6b7280; font-weight: 500; }
+
+    /* Section Headers */
+    .section-title { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 16px; }
+
+    /* Empty State Boxes */
+    .empty-state-box {
+      background: #ffffff; border-radius: 16px; border: 1px dashed #d1d5db;
+      padding: 30px 20px; text-align: center; margin-bottom: 24px;
+    }
+    .empty-state-box p { color: #9ca3af; font-size: 14px; margin-bottom: 12px; }
+    .btn-browse { background: #eef0f5; color: #263FE5; padding: 8px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 14px; display: inline-block;}
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid #eef0f5; display: flex; justify-content: space-around; align-items: center;
+      z-index: 100; padding-bottom: env(safe-area-inset-bottom);
+    }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #9ca3af; font-size: 11px; font-weight: 500; }
+    .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+    .nav-item.active { color: #263FE5; }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.99L19.53 19H4.47L12 5.99zM13 16h-2v2h2v-2zm0-6h-2v4h2v-4z"/></svg>
+      BloreWork
+    </div>
+    <div class="header-right">
+      <!-- Theme Toggle (Placeholder) -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      
+      <!-- Clickable Avatar to Profile -->
+      <a href="/pages/worker/profile.html">
+        <img src="https://ui-avatars.com/api/?name=Worker&background=263FE5&color=fff" alt="Profile" class="header-avatar">
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dashboard-container">
+    
+    <div class="greeting-section">
+      <h1>Hi, <span id="worker-name">Worker</span> 👋</h1>
+    </div>
+
+    <!-- Stats Section (Fixed Loading State) -->
+    <div class="stats-card">
+      <div class="stats-title">Your Stats</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-value" id="stat-applied">0</span>
+          <span class="stat-label">Jobs Applied</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="stat-views">0</span>
+          <span class="stat-label">Profile Views</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recently Viewed -->
+    <div class="section-title">Recently Viewed</div>
+    <div class="empty-state-box">
+      <p>You haven't viewed any jobs yet.</p>
+      <a href="/pages/jobs/index.html" class="btn-browse">Find Jobs</a>
+    </div>
+
+    <!-- Jobs Applied To -->
+    <div class="section-title">Jobs You Applied To</div>
+    <div class="empty-state-box">
+      <p>No applications yet.</p>
+      <a href="/pages/jobs/index.html" class="btn-browse">Browse Jobs</a>
+    </div>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="/pages/worker/dashboard.html" class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </a>
+    <a href="/pages/jobs/index.html" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      Search
+    </a>
+    <a href="/pages/worker/saved.html" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/></svg>
+      Saved
+    </a>
+    <!-- FIXED: Account button now links to Profile -->
+    <a href="/pages/worker/profile.html" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Account
+    </a>
+  </nav>
+
+  <!-- Dashboard JS -->
+  <script type="module" src="/js/pages/worker/dashboard.js"></script>
+</body>
+</html>

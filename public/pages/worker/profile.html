@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>My Profile — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/base/variables.css?v=1000">
+  <link rel="stylesheet" href="/css/base/reset.css?v=1000">
+  <link rel="stylesheet" href="/css/base/typography.css?v=1000">
+  <link rel="stylesheet" href="/css/components/buttons.css?v=1000">
+  <link rel="stylesheet" href="/css/components/navbar.css?v=1000">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css?v=1000">
+  <link rel="stylesheet" href="/css/components/cards.css?v=1000">
+  <link rel="stylesheet" href="/css/pages/dashboard.css?v=1000">
+</head>
+<body>
+  <header id="navbar-root"></header>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <a class="dashboard-sidebar__link active" href="/pages/worker/profile.html"><i data-lucide="user" class="icon"></i> My Profile</a>
+      <a class="dashboard-sidebar__link" href="/pages/worker/saved.html"><i data-lucide="bookmark" class="icon"></i> Saved Jobs</a>
+      <a class="dashboard-sidebar__link" href="/pages/jobs/index.html"><i data-lucide="search" class="icon"></i> Find Jobs</a>
+    </aside>
+
+    <div class="dashboard-tabs">
+      <a href="/pages/worker/profile.html" class="active"><i data-lucide="user" class="icon"></i> Profile</a>
+      <a href="/pages/worker/saved.html"><i data-lucide="bookmark" class="icon"></i> Saved</a>
+      <a href="/pages/jobs/index.html"><i data-lucide="search" class="icon"></i> Find Jobs</a>
+    </div>
+
+    <main class="dashboard-content wp">
+      <div class="wp-header">
+        <h1 class="wp-header__title">My Profile</h1>
+        <p class="wp-header__sub">Keep your details up to date to get better job matches.</p>
+      </div>
+
+      <form id="profile-form" class="wp-form">
+
+        <!-- Photo + share -->
+        <section class="wp-card wp-hero">
+          <div class="wp-avatar">
+            <img id="photo-preview" class="wp-avatar__img" src="/assets/icons/company-placeholder.png" alt="Profile photo" width="96" height="96">
+            <button type="button" class="wp-avatar__edit" data-photo-trigger aria-label="Change profile photo">
+              <i data-lucide="camera"></i>
+            </button>
+          </div>
+          <input type="file" id="photo-input" accept="image/*" hidden>
+
+          <div class="wp-hero__actions">
+            <button type="button" class="wp-link-btn" data-photo-trigger>
+              <i data-lucide="image"></i><span>Edit photo</span>
+            </button>
+            <span class="wp-hero__divider" aria-hidden="true"></span>
+            <button type="button" id="share-profile-btn" class="wp-link-btn">
+              <i data-lucide="share-2"></i><span>Share Profile</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Personal information -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Personal Information</h2>
+
+          <div class="wp-row">
+            <div class="wp-field wp-field--grow">
+              <label class="wp-label" for="worker-name">Full Name</label>
+              <input id="worker-name" class="wp-input" type="text" placeholder="Your full name" autocomplete="name" required>
+            </div>
+            <div class="wp-field wp-field--age">
+              <label class="wp-label" for="worker-age">Age</label>
+              <input id="worker-age" class="wp-input" type="number" inputmode="numeric" placeholder="21" min="16" max="80">
+            </div>
+          </div>
+
+          <div class="wp-field">
+            <label class="wp-label" for="worker-phone">Phone Number</label>
+            <input id="worker-phone" class="wp-input" type="tel" inputmode="tel" placeholder="+91 98765 43210" autocomplete="tel">
+          </div>
+        </section>
+
+        <!-- Skills + experience -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Work Details</h2>
+
+          <div class="wp-field">
+            <label class="wp-label" for="worker-skills">Skills</label>
+            <input id="worker-skills" class="wp-input" type="text" placeholder="e.g. Waiter, Bartender, Driving">
+            <p class="wp-hint">Separate multiple skills with commas.</p>
+          </div>
+
+          <div class="wp-field">
+            <label class="wp-label" for="worker-exp">Experience (Years)</label>
+            <input id="worker-exp" class="wp-input" type="number" inputmode="numeric" min="0" max="60" placeholder="e.g. 2">
+          </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Interested Categories</h2>
+          <p class="wp-hint wp-hint--top">Pick all the kinds of work you want.</p>
+
+          <div class="wp-picker" data-picker="cats">
+            <div id="selected-cats" class="wp-chips" aria-live="polite"></div>
+            <div class="wp-search">
+              <i data-lucide="search" class="wp-search__icon"></i>
+              <input type="text" id="search-cats" class="wp-input wp-search__input" placeholder="Search categories…"
+                     autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+                     role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest-cats">
+              <div id="suggest-cats" class="wp-suggest" role="listbox"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Locations -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Preferred Locations</h2>
+          <p class="wp-hint wp-hint--top">Areas in Bengaluru where you can work.</p>
+
+          <div class="wp-picker" data-picker="locs">
+            <div id="selected-locs" class="wp-chips" aria-live="polite"></div>
+            <div class="wp-search">
+              <i data-lucide="map-pin" class="wp-search__icon"></i>
+              <input type="text" id="search-locs" class="wp-input wp-search__input" placeholder="Search locations…"
+                     autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+                     role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest-locs">
+              <div id="suggest-locs" class="wp-suggest" role="listbox"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="wp-submit">
+          <button class="btn btn-primary btn-block wp-save" type="submit" id="save-btn">
+            <span class="wp-save__spinner" aria-hidden="true"></span>
+            <span class="wp-save__label">Save Profile</span>
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <nav id="bottom-nav-root"></nav>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script type="module" src="/js/pages/worker-profile.page.js?v=1000"></script>
+</body>
+</html>

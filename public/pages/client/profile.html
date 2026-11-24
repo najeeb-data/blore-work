@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Business Profile — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css?v=1001">
+  <link rel="stylesheet" href="/css/base/reset.css?v=1001">
+  <link rel="stylesheet" href="/css/base/typography.css?v=1001">
+  <link rel="stylesheet" href="/css/components/buttons.css?v=1001">
+  <link rel="stylesheet" href="/css/components/navbar.css?v=1001">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css?v=1001">
+  <link rel="stylesheet" href="/css/components/cards.css?v=1001">
+  <link rel="stylesheet" href="/css/pages/dashboard.css?v=1001">
+</head>
+<body>
+  <header id="navbar-root"></header>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <a class="dashboard-sidebar__link active" href="/pages/client/profile.html"><i data-lucide="building-2" class="icon"></i> Business Profile</a>
+      <a class="dashboard-sidebar__link" href="/pages/client/post-job.html"><i data-lucide="plus-circle" class="icon"></i> Post a Job</a>
+    </aside>
+
+    <div class="dashboard-tabs">
+      <a href="/pages/client/profile.html" class="active"><i data-lucide="building-2" class="icon"></i> Profile</a>
+      <a href="/pages/client/post-job.html"><i data-lucide="plus-circle" class="icon"></i> Post Job</a>
+    </div>
+
+    <main class="dashboard-content wp bp">
+      <div class="wp-header">
+        <h1 class="wp-header__title">Business Profile</h1>
+        <p class="wp-header__sub">Workers see this before they apply. A complete profile gets more responses.</p>
+      </div>
+
+      <form id="profile-form" class="wp-form" novalidate>
+
+        <!-- ============ Identity ============ -->
+        <section class="wp-card bp-identity">
+          <div class="bp-identity__row">
+            <div class="bp-logo">
+              <img id="logo-preview" class="bp-logo__img" src="/assets/icons/company-placeholder.png" alt="Business logo" width="80" height="80">
+              <button type="button" class="bp-logo__edit" data-logo-trigger aria-label="Change business logo">
+                <i data-lucide="camera"></i>
+              </button>
+              <input type="file" id="logo-input" accept="image/*" hidden>
+            </div>
+
+            <div class="bp-identity__text">
+              <div class="bp-identity__name" id="identity-name">Your business name</div>
+              <div class="bp-identity__category" id="identity-category">Add a business category</div>
+              <span class="bp-badge bp-badge--none" id="verified-badge">
+                <i data-lucide="shield"></i><span>Not verified</span>
+              </span>
+            </div>
+          </div>
+
+          <button type="button" class="wp-link-btn bp-identity__upload" data-logo-trigger>
+            <i data-lucide="image-up"></i><span>Upload logo</span>
+          </button>
+
+          <div class="bp-progress" aria-live="polite">
+            <div class="bp-progress__top">
+              <span class="bp-progress__label">Profile completeness</span>
+              <span class="bp-progress__value" id="completion-percent">0%</span>
+            </div>
+            <div class="bp-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="completion-track">
+              <div class="bp-progress__bar" id="completion-bar"></div>
+            </div>
+            <p class="bp-progress__hint" id="completion-hint"></p>
+          </div>
+        </section>
+
+        <!-- ============ Basic information ============ -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Basic Information</h2>
+
+          <div class="wp-field">
+            <label class="wp-label" for="biz-name">Business Name <span class="bp-req">*</span></label>
+            <input id="biz-name" class="wp-input" type="text" placeholder="e.g. Royal Caterers" autocomplete="organization" maxlength="80" required>
+            <p class="bp-error" data-error-for="biz-name"></p>
+          </div>
+
+          <div class="wp-field">
+            <label class="wp-label" for="biz-category">Business Category</label>
+            <select id="biz-category" class="wp-input bp-select">
+              <option value="">Select a category</option>
+            </select>
+          </div>
+
+          <div class="wp-field">
+            <div class="bp-label-row">
+              <label class="wp-label" for="biz-desc">About the Business</label>
+              <span class="bp-counter" id="desc-counter">0 / 500</span>
+            </div>
+            <textarea id="biz-desc" class="wp-input bp-textarea" rows="4" maxlength="500"
+              placeholder="What does your business do? What kind of workers do you usually hire?"></textarea>
+          </div>
+
+          <div class="wp-field">
+            <label class="wp-label" for="biz-contact">Contact Person</label>
+            <input id="biz-contact" class="wp-input" type="text" placeholder="e.g. Ramesh Kumar" autocomplete="name" maxlength="60">
+          </div>
+
+          <div class="bp-grid">
+            <div class="wp-field">
+              <label class="wp-label" for="biz-phone">Phone Number</label>
+              <div class="bp-phone">
+                <span class="bp-phone__code">+91</span>
+                <input id="biz-phone" class="wp-input bp-phone__input" type="tel" inputmode="numeric" placeholder="98765 43210" autocomplete="tel-national" maxlength="14">
+              </div>
+              <p class="bp-error" data-error-for="biz-phone"></p>
+            </div>
+
+            <div class="wp-field">
+              <label class="wp-label" for="biz-email">Email Address</label>
+              <input id="biz-email" class="wp-input" type="email" inputmode="email" placeholder="you@business.com" autocomplete="email" maxlength="100">
+              <p class="bp-error" data-error-for="biz-email"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Address ============ -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Business Address</h2>
+
+          <div class="wp-field">
+            <label class="wp-label" for="biz-address">Street Address</label>
+            <input id="biz-address" class="wp-input" type="text" placeholder="e.g. #12, 4th Cross, 12th Main Road" autocomplete="street-address" maxlength="150">
+          </div>
+
+          <div class="bp-grid bp-grid--3">
+            <div class="wp-field">
+              <label class="wp-label" for="biz-city">City</label>
+              <input id="biz-city" class="wp-input" type="text" placeholder="Bengaluru" autocomplete="address-level2" maxlength="50">
+            </div>
+            <div class="wp-field">
+              <label class="wp-label" for="biz-state">State</label>
+              <input id="biz-state" class="wp-input" type="text" placeholder="Karnataka" autocomplete="address-level1" maxlength="50">
+            </div>
+            <div class="wp-field">
+              <label class="wp-label" for="biz-pincode">PIN Code</label>
+              <input id="biz-pincode" class="wp-input" type="text" inputmode="numeric" placeholder="560034" autocomplete="postal-code" maxlength="6">
+              <p class="bp-error" data-error-for="biz-pincode"></p>
+            </div>
+          </div>
+
+          <div class="bp-divider"></div>
+
+          <h3 class="bp-subtitle">Service Areas</h3>
+          <p class="wp-hint wp-hint--top bp-subhint">Areas where you hire workers or run operations.</p>
+
+          <div class="wp-picker">
+            <div id="selected-locs" class="wp-chips" aria-live="polite"></div>
+            <div class="wp-search">
+              <i data-lucide="map-pin" class="wp-search__icon"></i>
+              <input type="text" id="search-locs" class="wp-input wp-search__input" placeholder="Search areas, e.g. Koramangala"
+                     autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+                     role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest-locs">
+              <div id="suggest-locs" class="wp-suggest" role="listbox"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Online presence ============ -->
+        <section class="wp-card">
+          <h2 class="wp-section-title">Online Presence</h2>
+
+          <div class="wp-field">
+            <label class="wp-label" for="biz-website">Website</label>
+            <div class="bp-icon-input">
+              <i data-lucide="globe" class="bp-icon-input__icon"></i>
+              <input id="biz-website" class="wp-input" type="url" inputmode="url" placeholder="www.yourbusiness.com" autocomplete="url" maxlength="200">
+            </div>
+            <p class="bp-error" data-error-for="biz-website"></p>
+          </div>
+
+          <div class="bp-grid">
+            <div class="wp-field">
+              <label class="wp-label" for="biz-instagram">Instagram</label>
+              <div class="bp-icon-input">
+                <i data-lucide="instagram" class="bp-icon-input__icon"></i>
+                <input id="biz-instagram" class="wp-input" type="text" inputmode="url" placeholder="@yourbusiness or link" maxlength="200" autocapitalize="off">
+              </div>
+              <p class="bp-error" data-error-for="biz-instagram"></p>
+            </div>
+            <div class="wp-field">
+              <label class="wp-label" for="biz-facebook">Facebook</label>
+              <div class="bp-icon-input">
+                <i data-lucide="facebook" class="bp-icon-input__icon"></i>
+                <input id="biz-facebook" class="wp-input" type="text" inputmode="url" placeholder="facebook.com/yourbusiness" maxlength="200" autocapitalize="off">
+              </div>
+              <p class="bp-error" data-error-for="biz-facebook"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ WhatsApp ============ -->
+        <section class="wp-card">
+          <div class="bp-section-head">
+            <h2 class="wp-section-title">WhatsApp Numbers</h2>
+            <span class="bp-count" id="whatsapp-count"></span>
+          </div>
+          <p class="wp-hint wp-hint--top">Workers can reach you on these numbers. Indian mobile numbers only.</p>
+
+          <div id="whatsapp-list" class="bp-wa-list"></div>
+
+          <button type="button" class="btn btn-secondary btn-sm bp-add-btn" id="add-whatsapp-btn">
+            <i data-lucide="plus"></i> Add number
+          </button>
+        </section>
+
+        <!-- ============ Verification ============ -->
+        <section class="wp-card bp-verify" id="verification-card">
+          <div class="bp-verify__icon" id="verification-icon"><i data-lucide="shield"></i></div>
+          <div class="bp-verify__body">
+            <h2 class="wp-section-title bp-verify__title" id="verification-title">Not verified</h2>
+            <p class="bp-verify__text" id="verification-status-text">Verified businesses get a blue tick on their jobs and profile. The BloreWork team reviews each request.</p>
+            <button type="button" class="btn btn-secondary btn-sm" id="request-verification-btn">
+              <i data-lucide="badge-check"></i> Request verification
+            </button>
+          </div>
+        </section>
+
+        <div class="wp-submit">
+          <button class="btn btn-primary btn-block wp-save" type="submit" id="save-btn">
+            <span class="wp-save__spinner" aria-hidden="true"></span>
+            <span class="wp-save__label">Save Profile</span>
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <nav id="bottom-nav-root"></nav>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script type="module" src="/js/pages/client-profile.page.js?v=1001"></script>
+</body>
+</html>
