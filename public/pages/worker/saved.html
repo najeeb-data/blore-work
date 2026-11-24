@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="theme-color" content="#263FE5">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Saved Jobs — BloreWork</title>
   <link rel="icon" href="/assets/icons/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/base/variables.css">
-  <link rel="stylesheet" href="/css/base/reset.css">
-  <link rel="stylesheet" href="/css/base/typography.css">
-  <link rel="stylesheet" href="/css/components/buttons.css">
-  <link rel="stylesheet" href="/css/components/navbar.css">
-  <link rel="stylesheet" href="/css/components/bottom-nav.css">
-  <link rel="stylesheet" href="/css/components/cards.css">
-  <link rel="stylesheet" href="/css/components/float-btn.css">
-  <link rel="stylesheet" href="/css/pages/dashboard.css">
-  <link rel="stylesheet" href="/css/pages/jobs.css">
+  <link rel="stylesheet" href="/css/base/variables.css?v=1005">
+  <link rel="stylesheet" href="/css/base/reset.css?v=1005">
+  <link rel="stylesheet" href="/css/base/typography.css?v=1005">
+  <link rel="stylesheet" href="/css/components/buttons.css?v=1005">
+  <link rel="stylesheet" href="/css/components/navbar.css?v=1005">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css?v=1005">
+  <link rel="stylesheet" href="/css/components/cards.css?v=1005">
+  <link rel="stylesheet" href="/css/components/float-btn.css?v=1005">
+  <link rel="stylesheet" href="/css/pages/dashboard.css?v=1005">
+  <link rel="stylesheet" href="/css/pages/jobs.css?v=1005">
 </head>
 <body>
   <header id="navbar-root"></header>
-  
+
   <div class="dashboard-layout">
     <aside class="dashboard-sidebar">
       <a class="dashboard-sidebar__link" href="/pages/worker/profile.html"><i data-lucide="user" class="icon"></i> My Profile</a>
@@ -34,16 +34,35 @@
       <a href="/pages/jobs/index.html"><i data-lucide="search" class="icon"></i> Find Jobs</a>
     </div>
 
-    <main class="dashboard-content">
-      <div class="dashboard-header"><h1>Saved Jobs</h1></div>
-      <div id="saved-jobs-grid" class="jobs-grid" style="grid-template-columns: 1fr;">
-        <!-- Js will inject here -->
+    <main class="dashboard-content saved-page">
+      <div class="saved-head">
+        <div class="saved-head__text">
+          <h1 class="saved-head__title">Saved Jobs</h1>
+          <p class="saved-head__count" id="saved-count" aria-live="polite">Loading your saved jobs…</p>
+        </div>
+        <a href="/pages/jobs/index.html" class="saved-head__link">
+          <i data-lucide="search" class="icon"></i> Browse jobs
+        </a>
+      </div>
+
+      <div id="saved-jobs-grid" class="jobs-grid saved-grid"></div>
+
+      <section class="saved-inactive" id="saved-inactive" hidden>
+        <h2 class="saved-inactive__title">No longer available</h2>
+        <p class="saved-inactive__sub">These jobs were closed or their date has passed.</p>
+        <div id="saved-inactive-grid" class="jobs-grid saved-grid"></div>
+      </section>
+
+      <div class="saved-missing" id="saved-missing" hidden>
+        <i data-lucide="info" class="icon"></i>
+        <span id="saved-missing-text"></span>
+        <button type="button" class="saved-missing__btn" id="saved-missing-btn">Remove</button>
       </div>
     </main>
   </div>
-  
+
   <nav id="bottom-nav-root"></nav>
-  <script src="https://unpkg.com/lucide0.469.0"></script>
-  <script type="module" src="/js/pages/saved-jobs.page.js?v=8"></script>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script type="module" src="/js/pages/saved-jobs.page.js?v=1005"></script>
 </body>
 </html>

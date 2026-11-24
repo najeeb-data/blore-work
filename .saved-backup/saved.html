@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Jobs — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css">
+  <link rel="stylesheet" href="/css/components/cards.css">
+  <link rel="stylesheet" href="/css/components/float-btn.css">
+  <link rel="stylesheet" href="/css/pages/dashboard.css">
+  <link rel="stylesheet" href="/css/pages/jobs.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <a class="dashboard-sidebar__link" href="/pages/worker/profile.html"><i data-lucide="user" class="icon"></i> My Profile</a>
+      <a class="dashboard-sidebar__link active" href="/pages/worker/saved.html"><i data-lucide="bookmark" class="icon"></i> Saved Jobs</a>
+      <a class="dashboard-sidebar__link" href="/pages/jobs/index.html"><i data-lucide="search" class="icon"></i> Find Jobs</a>
+    </aside>
+
+    <div class="dashboard-tabs">
+      <a href="/pages/worker/profile.html"><i data-lucide="user" class="icon"></i> Profile</a>
+      <a href="/pages/worker/saved.html" class="active"><i data-lucide="bookmark" class="icon"></i> Saved</a>
+      <a href="/pages/jobs/index.html"><i data-lucide="search" class="icon"></i> Find Jobs</a>
+    </div>
+
+    <main class="dashboard-content">
+      <div class="dashboard-header"><h1>Saved Jobs</h1></div>
+      <div id="saved-jobs-grid" class="jobs-grid" style="grid-template-columns: 1fr;">
+        <!-- Js will inject here -->
+      </div>
+    </main>
+  </div>
+  
+  <nav id="bottom-nav-root"></nav>
+  <script src="https://unpkg.com/lucide0.469.0"></script>
+  <script type="module" src="/js/pages/saved-jobs.page.js?v=8"></script>
+</body>
+</html>

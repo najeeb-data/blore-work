@@ -3,10 +3,11 @@ import { initFooter } from '../components/footer.js';
 import { initBottomNav } from '../components/bottom-nav.js';
 import { getJobs } from '../services/job.service.js';
 import { getFirebase } from '../firebase/firebase.service.js';
-import { getUserProfile } from '../services/user.service.js';
+import { getUserProfile, toggleSavedJob } from '../services/user.service.js';
+import { onAuthChange } from '../firebase/auth.service.js';
 import { showToast } from '../components/toast.js';
 import {
-  createJobCard, renderSkeletons, createStateBox, refreshIcons, decodeText, parseJobDate
+  createJobCard, renderSkeletons, createStateBox, refreshIcons, decodeText, parseJobDate, setSaveButtonState
 } from '../components/job-card.js';
 
 initNavbar();
@@ -35,7 +36,9 @@ const state = {
   when: 'all',        // all | today | tomorrow | weekend
   prefs: null,        // { cats: [], locs: [] } when "My Preferences" is on
   sort: 'newest',
-  shown: PAGE_SIZE
+  shown: PAGE_SIZE,
+  user: null,         // signed-in user (for bookmarks)
+  saved: new Set()    // job ids in users/{uid}.savedJobs
 };
 
 const $ = (id) => document.getElementById(id);
@@ -166,10 +169,57 @@ function render({ keepPage = false } = {}) {
       ? `Showing ${visible.length} of ${total} jobs`
       : `${total} jobs available`;
 
-  grid.replaceChildren(...visible.map(createJobCard));
+  grid.replaceChildren(...visible.map((job) => createJobCard(job, {
+    saved: state.saved.has(job.id),
+    onToggleSave: toggleSave
+  })));
   loadMoreBtn.hidden = visible.length >= total;
   if (!loadMoreBtn.hidden) loadMoreBtn.textContent = `Load more jobs (${total - visible.length} more)`;
   refreshIcons();
+}
+
+/* ------------------------------------------------------------------ *
+ * Bookmarks (users/{uid}.savedJobs array via toggleSavedJob)
+ * ------------------------------------------------------------------ */
+async function toggleSave(job, btn) {
+  if (!state.user) {
+    showToast('Please log in to save jobs.', 'error');
+    return;
+  }
+  const wasSaved = state.saved.has(job.id);
+  // Update the UI first, then roll back if Firestore fails.
+  if (wasSaved) state.saved.delete(job.id); else state.saved.add(job.id);
+  setSaveButtonState(btn, !wasSaved);
+  btn.disabled = true;
+  try {
+    await toggleSavedJob(state.user.uid, job.id, !wasSaved);
+    showToast(wasSaved ? 'Removed from saved jobs.' : 'Job saved.', 'success');
+  } catch (err) {
+    console.error('Could not update saved jobs', err);
+    if (wasSaved) state.saved.add(job.id); else state.saved.delete(job.id);
+    setSaveButtonState(btn, wasSaved);
+    showToast('Could not update saved jobs. Please try again.', 'error');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function loadSavedIds(user) {
+  state.user = user || null;
+  state.saved = new Set();
+  if (user) {
+    try {
+      const profile = await getUserProfile(user.uid);
+      (Array.isArray(profile?.savedJobs) ? profile.savedJobs : []).forEach((id) => state.saved.add(id));
+    } catch (err) {
+      console.warn('Could not load saved jobs', err);
+    }
+  }
+  // Refresh bookmark icons on cards already on screen.
+  grid.querySelectorAll('.jc-wrap').forEach((wrap) => {
+    const btn = wrap.querySelector('.jc-save');
+    if (btn) setSaveButtonState(btn, state.saved.has(wrap.dataset.jobId));
+  });
 }
 
 /* ------------------------------------------------------------------ *
@@ -353,3 +403,4 @@ async function loadJobs() {
 }
 
 loadJobs();
+onAuthChange((user) => { loadSavedIds(user); });

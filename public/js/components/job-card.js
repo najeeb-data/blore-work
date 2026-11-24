@@ -1,4 +1,5 @@
-// Shared job card used by the homepage (Recent Jobs) and Find Jobs.
+// Shared job card used by the homepage (Recent Jobs), Find Jobs, Saved Jobs
+// and the public business profile.
 // Builds DOM with textContent only, so job text can never inject HTML.
 // Call window.lucide.createIcons() after appending cards (icons use <i data-lucide>).
 
@@ -94,10 +95,26 @@ function metaItem(iconName, text, label) {
   return li;
 }
 
+/* ---------- Bookmark button ---------- */
+export function setSaveButtonState(btn, saved) {
+  btn.classList.toggle('is-saved', saved);
+  btn.setAttribute('aria-pressed', String(saved));
+  const label = saved ? 'Remove from saved jobs' : 'Save job';
+  btn.setAttribute('aria-label', label);
+  btn.title = label;
+}
+
 /* ---------- Card ---------- */
-export function createJobCard(job) {
+// options (all optional):
+//   saved:        boolean - current bookmark state
+//   onToggleSave: (job, button) => void - when given, a bookmark button is added.
+//                 The card is then wrapped in <div class="jc-wrap"> so the button
+//                 is not nested inside the link.
+//   status:       'closed' | 'expired' - shows the job as no longer available
+export function createJobCard(job, options = {}) {
   const card = document.createElement('a');
   card.className = 'job-card jc';
+  if (options.status) card.classList.add('jc--inactive');
   card.href = `/pages/jobs/detail.html?id=${encodeURIComponent(job.id)}`;
 
   const title = decodeText(job.title) || 'Untitled job';
@@ -112,12 +129,17 @@ export function createJobCard(job) {
   const top = node('div', 'jc__top');
   if (category) top.append(node('span', 'jc__category', category));
   const badges = node('div', 'jc__badges');
-  if (job.isFeatured) {
+  if (options.status) {
+    const b = node('span', 'jc__badge jc__badge--muted');
+    b.append(icon(options.status === 'closed' ? 'lock' : 'calendar-x'), document.createTextNode(options.status === 'closed' ? 'Closed' : 'Expired'));
+    badges.append(b);
+  }
+  if (job.isFeatured && !options.status) {
     const b = node('span', 'jc__badge jc__badge--featured');
     b.append(icon('star'), document.createTextNode('Featured'));
     badges.append(b);
   }
-  if (job.isUrgent) {
+  if (job.isUrgent && !options.status) {
     const b = node('span', 'jc__badge jc__badge--urgent');
     b.append(icon('zap'), document.createTextNode('Urgent'));
     badges.append(b);
@@ -149,7 +171,22 @@ export function createJobCard(job) {
   footer.append(cta);
   card.append(footer);
 
-  return card;
+  if (typeof options.onToggleSave !== 'function') return card;
+
+  const wrap = node('div', 'jc-wrap');
+  wrap.dataset.jobId = job.id;
+  card.classList.add('jc--has-save');
+  const btn = node('button', 'jc-save');
+  btn.type = 'button';
+  btn.append(icon('bookmark'));
+  setSaveButtonState(btn, !!options.saved);
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    options.onToggleSave(job, btn);
+  });
+  wrap.append(card, btn);
+  return wrap;
 }
 
 export function createSkeletonCard() {
