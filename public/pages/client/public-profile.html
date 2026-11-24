@@ -3,30 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="theme-color" content="#263FE5">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Business Profile — BloreWork</title>
+  <link rel="icon" href="/assets/icons/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/base/variables.css">
-  <link rel="stylesheet" href="/css/base/reset.css">
-  <link rel="stylesheet" href="/css/base/typography.css">
-  <link rel="stylesheet" href="/css/components/buttons.css">
-  <link rel="stylesheet" href="/css/components/navbar.css">
-  <link rel="stylesheet" href="/css/components/bottom-nav.css">
-  <link rel="stylesheet" href="/css/components/float-btn.css">
-  <link rel="stylesheet" href="/css/pages/client-profile.css">
+  <link rel="stylesheet" href="/css/base/variables.css?v=1004">
+  <link rel="stylesheet" href="/css/base/reset.css?v=1004">
+  <link rel="stylesheet" href="/css/base/typography.css?v=1004">
+  <link rel="stylesheet" href="/css/components/buttons.css?v=1004">
+  <link rel="stylesheet" href="/css/components/navbar.css?v=1004">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css?v=1004">
+  <link rel="stylesheet" href="/css/components/float-btn.css?v=1004">
+  <link rel="stylesheet" href="/css/pages/jobs.css?v=1004">
+  <link rel="stylesheet" href="/css/pages/client-profile.css?v=1004">
 </head>
 <body>
   <header id="navbar-root"></header>
-  
-  <main class="page-container" style="max-width: 800px; margin: 0 auto; padding: 24px 16px 80px;">
-    <div id="profile-content">
-      <p class="text-muted" style="text-align: center; padding: 40px;">Loading business profile...</p>
+
+  <main class="cp" id="profile-content" aria-live="polite">
+    <!-- Loading skeleton (replaced by JS) -->
+    <div class="cp-skeleton" aria-hidden="true">
+      <div class="cp-card cp-skeleton__hero">
+        <div class="cp-skeleton__logo"></div>
+        <div class="cp-skeleton__lines">
+          <div class="cp-skeleton__bar cp-skeleton__bar--title"></div>
+          <div class="cp-skeleton__bar"></div>
+          <div class="cp-skeleton__bar cp-skeleton__bar--short"></div>
+        </div>
+      </div>
+      <div class="cp-skeleton__stats">
+        <div class="cp-card cp-skeleton__stat"></div><div class="cp-card cp-skeleton__stat"></div>
+        <div class="cp-card cp-skeleton__stat"></div><div class="cp-card cp-skeleton__stat"></div>
+      </div>
     </div>
+    <p class="visually-hidden">Loading business profile…</p>
   </main>
 
   <nav id="bottom-nav-root"></nav>
   <script src="https://unpkg.com/lucide@0.469.0"></script>
   <script>lucide.createIcons();</script>
-  <script type="module" src="/js/pages/public-client-profile.page.js"></script>
+  <script type="module" src="/js/pages/public-client-profile.page.js?v=1004"></script>
 </body>
 </html>

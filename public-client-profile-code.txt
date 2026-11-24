@@ -1,0 +1,632 @@
+
+========================================
+FILE: public/pages/client/public-profile.html
+========================================
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#263FE5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Profile — BloreWork</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base/variables.css">
+  <link rel="stylesheet" href="/css/base/reset.css">
+  <link rel="stylesheet" href="/css/base/typography.css">
+  <link rel="stylesheet" href="/css/components/buttons.css">
+  <link rel="stylesheet" href="/css/components/navbar.css">
+  <link rel="stylesheet" href="/css/components/bottom-nav.css">
+  <link rel="stylesheet" href="/css/components/float-btn.css">
+  <link rel="stylesheet" href="/css/pages/client-profile.css">
+</head>
+<body>
+  <header id="navbar-root"></header>
+  
+  <main class="page-container" style="max-width: 800px; margin: 0 auto; padding: 24px 16px 80px;">
+    <div id="profile-content">
+      <p class="text-muted" style="text-align: center; padding: 40px;">Loading business profile...</p>
+    </div>
+  </main>
+
+  <nav id="bottom-nav-root"></nav>
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <script>lucide.createIcons();</script>
+  <script type="module" src="/js/pages/public-client-profile.page.js"></script>
+</body>
+</html>
+
+========================================
+FILE: public/js/pages/public-client-profile.page.js
+========================================
+import { initNavbar } from '/js/components/navbar.js';
+import { initBottomNav } from '/js/components/bottom-nav.js';
+import { getFirebase } from '/js/firebase/firebase.service.js';
+import { getUserProfile } from '/js/services/user.service.js';
+
+initNavbar();
+initBottomNav();
+const SDK = 'https://www.gstatic.com/firebasejs/10.13.0';
+
+async function loadProfile() {
+  const params = new URLSearchParams(window.location.search);
+  const clientId = params.get('id');
+  const container = document.getElementById('profile-content');
+
+  if (!clientId) { container.innerHTML = '<h2>Business not found</h2>'; return; }
+
+  try {
+    const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+    
+    // 1. Fetch Client Profile
+    const profile = await getUserProfile(clientId);
+    if (!profile) { container.innerHTML = '<h2>Business profile not found</h2>'; return; }
+
+    // 2. Fetch Client's Jobs (No complex query, just filter in JS)
+    const q = firestore.query(firestore.collection(db, 'jobs'), firestore.where('clientId', '==', clientId));
+    const jobsSnap = await firestore.getDocs(q);
+    
+    let jobs = jobsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    jobs = jobs.filter(j => j.status === 'open');
+    jobs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+    // 3. Setup Variables
+    const logoUrl = profile.logoUrl || '/assets/icons/company-placeholder.png';
+    const name = profile.businessName || 'Business';
+    const rating = profile.averageRating ? profile.averageRating.toFixed(1) : 'New';
+    const reviews = profile.totalReviews || 0;
+    const verified = profile.isVerified ? '<i data-lucide="check-circle" style="color:#263FE5; width:20px;"></i>' : '';
+    const phone = profile.phone ? profile.phone.replace(/\D/g, '') : '';
+    const locationText = profile.locationArea ? `${profile.locationArea}${profile.address ? `, ${profile.address}` : ''}` : (profile.address || 'Bangalore, India');
+    
+    // 4. Render Jobs Grid
+    let jobsHtml = '';
+    if (jobs.length === 0) {
+      jobsHtml = '<p class="text-muted" style="grid-column: 1/-1; text-align: center; padding: 24px;">No active jobs at the moment.</p>';
+    } else {
+      jobs.forEach(job => {
+        jobsHtml += `
+          <a href="/pages/jobs/detail.html?id=${job.id}" class="grid-card">
+            <div>
+              <div class="title">${job.title}</div>
+              <div class="category">${job.category}</div>
+            </div>
+            <div>
+              <div class="salary">₹${job.pay}/day</div>
+              <div class="location"><i data-lucide="map-pin"></i>${job.location}</div>
+            </div>
+          </a>
+        `;
+      });
+    }
+
+    container.innerHTML = `
+      <div class="card mb-4" style="border: none; background: transparent; padding: 0;">
+        <div class="profile-header">
+          <img src="${logoUrl}" class="profile-avatar">
+          <div class="profile-info">
+            <div class="profile-name">${name} ${verified}</div>
+            <div class="profile-stats">
+              <div><strong>${jobs.length}</strong><span>Active Jobs</span></div>
+              <div><strong>${rating}</strong><span>Rating (${reviews})</span></div>
+            </div>
+            <div class="profile-bio">
+              <div><i data-lucide="map-pin" class="icon"></i>${locationText}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          ${phone ? `
+            <a href="https://wa.me/${phone}?text=Hi, I saw your business on BloreWork and would like to connect." target="_blank" class="btn btn-primary">
+              <i data-lucide="message-circle"></i> Chat
+            </a>
+          ` : ''}
+          <button id="share-profile-btn" class="btn btn-secondary">
+            <i data-lucide="share-2"></i> Share Profile
+          </button>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid var(--color-border); padding-top: 24px;">
+        <h3 style="margin-bottom: 16px; font-size: 16px; display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="briefcase"></i> Jobs Posted by ${name}
+        </h3>
+        <div class="jobs-grid-container">
+          ${jobsHtml}
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+
+    // Share Profile Logic
+    document.getElementById('share-profile-btn')?.addEventListener('click', () => {
+      const text = `Check out ${name} on BloreWork! They are hiring. View their profile here: ${window.location.href}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    });
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = '<h2>Error loading profile</h2>';
+  }
+}
+loadProfile();
+========================================
+FILE: public/css/pages/client-profile.css
+========================================
+/* Profile Header */
+.profile-header { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
+@media (max-width: 480px) { .profile-header { flex-direction: column; text-align: center; gap: 16px; } }
+.profile-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid var(--color-primary); background: #fff; }
+.profile-info { flex: 1; }
+.profile-name { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.profile-stats { display: flex; gap: 24px; margin-bottom: 12px; font-size: 15px; }
+.profile-stats strong { display: block; font-size: 18px; color: var(--color-text); }
+.profile-stats span { color: var(--color-text-muted); font-size: 13px; }
+.profile-bio { font-size: 14px; color: var(--color-text); line-height: 1.5; }
+.profile-bio .icon { width: 14px; height: 14px; display: inline-block; vertical-align: text-bottom; margin-right: 4px; color: var(--color-text-muted); }
+
+/* Action Buttons */
+.profile-actions { display: flex; gap: 8px; margin-bottom: 24px; }
+.profile-actions .btn { flex: 1; }
+
+/* Jobs Grid (Instagram Style) */
+.jobs-grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 768px) { .jobs-grid-container { grid-template-columns: repeat(3, 1fr); } }
+
+.grid-card {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: 12px; padding: 16px; text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.grid-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--color-primary); }
+.grid-card .title { font-size: 15px; font-weight: 600; margin-bottom: 4px; line-height: 1.3; }
+.grid-card .category { font-size: 12px; color: var(--color-text-muted); margin-bottom: 12px; }
+.grid-card .salary { font-size: 15px; font-weight: 700; color: var(--color-primary); }
+.grid-card .location { font-size: 12px; color: var(--color-text-muted); display: flex; align-items: center; gap: 4px; margin-top: 8px; }
+
+========================================
+FILE: public/css/pages/profile.css
+========================================
+/* ===== My Profile page — Android + iPhone ===== */
+.profile-page{
+  --p-blue:#263FE5; --p-soft:#EEF1FE;
+  --p-bg:#F5F6FA; --p-text:#17203A; --p-muted:#6B7280; --p-border:#E5E7EB;
+  background:var(--p-bg);
+  -webkit-tap-highlight-color:transparent;
+  padding-bottom:calc(72px + env(safe-area-inset-bottom));
+}
+.profile-page .dashboard-header{margin-bottom:16px}
+.profile-page .dashboard-header h1{font-size:24px;font-weight:700;line-height:1.25;margin:0 0 4px;color:var(--p-text)}
+.profile-page .profile-sub{margin:0;font-size:14px;color:var(--p-muted)}
+.profile-page .dashboard-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;white-space:nowrap}
+.profile-page .dashboard-tabs::-webkit-scrollbar{display:none}
+.profile-page .profile-form{max-width:640px;width:100%}
+.profile-page .profile-section{background:#fff;border:1px solid var(--p-border);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:none;}
+.profile-page .profile-section__title{font-size:18px;font-weight:600;color:var(--p-text);margin:0 0 16px;}
+.profile-page .avatar-block{display:flex;flex-direction:column;align-items:center;gap:16px;margin:0}
+.profile-page .avatar-preview{width:96px;height:96px;border-radius:50%;object-fit:cover;border:1px solid var(--p-border);background:#fff;}
+.profile-page .avatar-actions{display:flex;flex-wrap:wrap;gap:8px;width:100%}
+.profile-page .avatar-actions .btn{flex:1 1 130px;min-height:44px;padding:0 12px;gap:8px;font-size:14px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;}
+.profile-page .avatar-actions .icon, .profile-page .avatar-actions svg{width:18px;height:18px;flex:0 0 auto}
+.profile-page .form-group{margin:0 0 16px}
+.profile-page .profile-section .form-group:last-child{margin-bottom:0}
+.profile-page .form-label{display:block;margin:0 0 8px;font-size:14px;font-weight:500;color:var(--p-text);}
+.profile-page .form-hint{margin:6px 0 0;font-size:12px;line-height:1.4;color:var(--p-muted)}
+.profile-page .form-input{display:block;width:100%;height:48px;padding:0 14px;font-family:inherit;font-size:16px;color:var(--p-text);background:#fff;border:1px solid var(--p-border);border-radius:12px;-webkit-appearance:none;appearance:none;box-shadow:none;}
+.profile-page .form-input::placeholder{color:#9CA3AF}
+.profile-page .form-input:focus{outline:none;border-color:var(--p-blue);box-shadow:0 0 0 3px rgba(38,63,229,.15);}
+.profile-page .form-input:disabled{background:var(--p-bg);color:var(--p-muted)}
+.profile-page input[type=number]{-moz-appearance:textfield}
+.profile-page input[type=number]::-webkit-outer-spin-button, .profile-page input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.profile-page .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.profile-page .form-row .form-group{margin-bottom:16px}
+.profile-page .form-row + .form-group, .profile-page .profile-section .form-row:last-child .form-group{margin-bottom:0}
+.profile-page .tags-container{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.profile-page .tags-container:empty{display:none}
+.profile-page .tags-container > *{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:4px 12px;border-radius:999px;background:var(--p-soft);color:var(--p-blue);border:1px solid #D6DCFB;font-size:13px;font-weight:600;cursor:pointer;}
+.profile-page .search-wrapper{position:relative}
+.profile-page .suggestions-box{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:20;max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#fff;border:1px solid var(--p-border);border-radius:12px;}
+.profile-page .suggestions-box:empty{display:none}
+.profile-page .suggestions-box > *{min-height:44px;padding:12px 14px;font-size:15px;color:var(--p-text);border-bottom:1px solid var(--p-border);cursor:pointer;}
+.profile-page .suggestions-box > *:last-child{border-bottom:0}
+.profile-page .profile-save{width:100%;height:48px;margin-top:8px;border-radius:12px;font-size:15px;font-weight:600;}
+.profile-page .profile-save:disabled{opacity:.6}
+@media (max-width:360px){.profile-page .profile-section{padding:14px}.profile-page .form-row{gap:8px}}
+@media (min-width:900px){.profile-page{padding-bottom:0}.profile-page .profile-section{padding:24px}}
+
+/* Fix for search dropdown visibility */
+.profile-page .search-wrapper { position: relative; z-index: 50; }
+.profile-page .suggestions-box { z-index: 9999 !important; }
+
+========================================
+FILE: public/js/services/job.service.js
+========================================
+import { getFirebase } from '../firebase/firebase.service.js';
+const SDK = 'https://www.gstatic.com/firebasejs/10.13.0';
+
+export async function getJobs() {
+  try {
+    const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+    // Fetch all jobs without complex sorting to avoid index errors
+    const snapshot = await firestore.getDocs(firestore.collection(db, 'jobs'));
+    
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+
+    return snapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() }))
+      .filter(job => {
+        if (job.status === 'closed') return false;
+        if (!job.date) return true;
+        return new Date(job.date) >= today;
+      })
+      .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  } catch (err) {
+    console.error("Error fetching jobs:", err);
+    return []; // Return empty array instead of hanging
+  }
+}
+
+export async function getJobById(jobId) {
+  try {
+    const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+    const docSnap = await firestore.getDoc(firestore.doc(db, 'jobs', jobId));
+    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+export async function createJob(jobData) {
+  const [{ db, auth }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  const user = auth.currentUser;
+  if (!user) throw new Error("Must be logged in to post a job.");
+  const docRef = await firestore.addDoc(firestore.collection(db, 'jobs'), {
+    ...jobData,
+    status: 'open',
+    clientId: user.uid,
+    createdAt: firestore.serverTimestamp(),
+    views: 0
+  });
+  return docRef.id;
+}
+
+export async function updateJob(jobId, jobData) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  await firestore.updateDoc(firestore.doc(db, 'jobs', jobId), jobData);
+}
+
+export async function deleteJob(jobId) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  await firestore.deleteDoc(firestore.doc(db, 'jobs', jobId));
+}
+
+export async function closeJob(jobId) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  await firestore.updateDoc(firestore.doc(db, 'jobs', jobId), { status: 'closed' });
+}
+
+========================================
+FILE: public/js/services/user.service.js
+========================================
+import { getFirebase } from '../firebase/firebase.service.js';
+const SDK = 'https://www.gstatic.com/firebasejs/10.13.0';
+
+export async function getUserProfile(uid) {
+  try {
+    const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+    const docRef = firestore.doc(db, 'users', uid);
+    const docSnap = await firestore.getDoc(docRef);
+    return docSnap.exists() ? docSnap.data() : null;
+  } catch (err) {
+    console.error("Error loading profile:", err);
+    return null;
+  }
+}
+
+export async function saveUserProfile(uid, data) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  const docRef = firestore.doc(db, 'users', uid);
+  await firestore.setDoc(docRef, data, { merge: true });
+}
+
+export async function toggleSavedJob(uid, jobId, isSaving) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  const docRef = firestore.doc(db, 'users', uid);
+  await firestore.updateDoc(docRef, {
+    savedJobs: isSaving ? firestore.arrayUnion(jobId) : firestore.arrayRemove(jobId)
+  });
+}
+
+export async function markJobAsApplied(uid, jobId) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  const docRef = firestore.doc(db, 'users', uid);
+  await firestore.updateDoc(docRef, { appliedJobs: firestore.arrayUnion(jobId) });
+}
+
+export async function addRecentlyViewed(uid, jobId) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  const docRef = firestore.doc(db, 'users', uid);
+  const docSnap = await firestore.getDoc(docRef);
+  if (!docSnap.exists()) return;
+  let viewed = docSnap.data().recentlyViewed || [];
+  viewed = viewed.filter(id => id !== jobId);
+  viewed.unshift(jobId); 
+  if (viewed.length > 5) viewed = viewed.slice(0, 5);
+  await firestore.updateDoc(docRef, { recentlyViewed: viewed });
+}
+
+export async function completeJobWithRating(workerId, rating, jobId, reviewText, clientId, clientName) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  const docRef = firestore.doc(db, 'users', workerId);
+  const docSnap = await firestore.getDoc(docRef);
+  if (!docSnap.exists()) return;
+  
+  const profile = docSnap.data();
+  const currentRating = profile.averageRating || 0;
+  const totalReviews = profile.totalReviews || 0;
+  const newTotalReviews = totalReviews + 1;
+  const newAverageRating = ((currentRating * totalReviews) + rating) / newTotalReviews;
+  
+  let completedHistory = profile.completedJobsHistory || [];
+  if (jobId && !completedHistory.includes(jobId)) completedHistory.push(jobId);
+  
+  await firestore.updateDoc(docRef, {
+    completedJobs: firestore.increment(1),
+    averageRating: newAverageRating,
+    totalReviews: newTotalReviews,
+    completedJobsHistory: completedHistory
+  });
+
+  if (reviewText && reviewText.trim() !== '') {
+    await firestore.addDoc(firestore.collection(db, 'reviews'), {
+      workerId, clientId, clientName: clientName || 'A Client', rating, text: reviewText, jobId,
+      createdAt: firestore.serverTimestamp()
+    });
+  }
+}
+
+export async function rateClient(clientId, rating) {
+  const [{ db }, firestore] = await Promise.all([getFirebase(), import(`${SDK}/firebase-firestore.js`)]);
+  const docRef = firestore.doc(db, 'users', clientId);
+  const docSnap = await firestore.getDoc(docRef);
+  if (!docSnap.exists()) return;
+  
+  const profile = docSnap.data();
+  const currentRating = profile.averageRating || 0;
+  const totalReviews = profile.totalReviews || 0;
+  const newTotalReviews = totalReviews + 1;
+  const newAverageRating = ((currentRating * totalReviews) + rating) / newTotalReviews;
+  
+  await firestore.updateDoc(docRef, { averageRating: newAverageRating, totalReviews: newTotalReviews });
+}
+
+========================================
+FILE: public/js/firebase/firebase.service.js
+========================================
+// Lazy-initializes Firebase only when actually needed. Uses the modular SDK from CDN —
+// no bundler, no build step, per the vanilla-ESM project rule.
+
+import { firebaseConfig, isConfigured } from './firebase-config.js';
+
+const SDK = 'https://www.gstatic.com/firebasejs/10.13.0';
+let _promise = null;
+
+async function load() {
+  if (!isConfigured()) {
+    throw new Error('Firebase not configured. Edit public/js/firebase/firebase-config.js');
+  }
+  const [{ initializeApp }, { getAuth }, { getFirestore }] = await Promise.all([
+    import(`${SDK}/firebase-app.js`),
+    import(`${SDK}/firebase-auth.js`),
+    import(`${SDK}/firebase-firestore.js`),
+  ]);
+  const app = initializeApp(firebaseConfig);
+  return { app, auth: getAuth(app), db: getFirestore(app) };
+}
+
+export function getFirebase() {
+  if (!_promise) _promise = load();
+  return _promise;
+}
+
+========================================
+FILE: public/css/base/variables.css
+========================================
+:root {
+  /* Brand Colors */
+  --color-primary: #263FE5;
+  --color-primary-hover: #1E33C6;
+  --color-primary-soft: #EEF1FE;
+  
+  /* Surfaces & Backgrounds */
+  --color-bg: #F5F6FA;
+  --color-surface: #FFFFFF;
+  
+  /* Text */
+  --color-text: #17203A;
+  --color-text-muted: #6B7280;
+  --color-text-subtle: #9CA3AF;
+  
+  /* Borders & Lines */
+  --color-border: #E5E7EB;
+  
+  /* Status */
+  --color-success: #16A34A;
+  --color-error: #DC2626;
+  --color-warning: #F59E0B;
+
+  /* Typography */
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  
+  /* Spacing */
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-12: 3rem;
+  
+  /* Radius */
+  --radius-sm: 8px; 
+  --radius-md: 12px; 
+  --radius-lg: 16px; 
+  --radius-pill: 999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+  
+  /* Layout */
+  --container: 1120px;
+  --container-pad: 16px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #0F111A;
+  --color-surface: #1A1D27;
+  --color-text: #F9FAFB;
+  --color-text-muted: #9CA3AF;
+  --color-border: #374151;
+  --color-primary-soft: #1E2442;
+}
+
+========================================
+FILE: public/js/components/navbar.js
+========================================
+import { el, qs, clearChildren } from '../utils/dom-utils.js';
+import { APP_NAME, ROUTES } from '../config/app-config.js';
+import { onAuthChange, signOut } from '../firebase/auth.service.js';
+import { getCurrentTheme, toggleTheme } from './theme.js';
+import { getUserProfile } from '../services/user.service.js';
+
+export async function initNavbar() {
+  const root = qs('#navbar-root');
+  if (!root) return;
+  let currentUser = null;
+  let userRole = 'worker';
+  let userProfile = null;
+
+  function themeToggle() {
+    return el('button', { class: 'btn btn-secondary btn-sm', style: 'border:none; background:transparent; padding:0; width:36px; display:flex; align-items:center; justify-content:center;', type: 'button', onClick: () => { toggleTheme(); render(); } }, [
+      el('i', { 'data-lucide': getCurrentTheme() === 'dark' ? 'sun' : 'moon', style: 'width:20px;' })
+    ]);
+  }
+
+  function loggedOutActions() {
+    return [
+      el('a', { class: 'btn btn-secondary btn-sm', href: ROUTES.LOGIN }, 'Log in'),
+      el('a', { class: 'btn btn-primary btn-sm', href: ROUTES.REGISTER }, 'Get Started'),
+    ];
+  }
+
+  function loggedInActions(user) {
+    let dashRoute = '/pages/worker/dashboard.html';
+    if (userRole === 'client') dashRoute = '/pages/client/dashboard.html';
+    if (userRole === 'admin') dashRoute = '/pages/admin/dashboard.html';
+    
+    let avatarElement;
+    if (userProfile && (userProfile.photoUrl || userProfile.logoUrl)) {
+      avatarElement = el('img', { src: userProfile.photoUrl || userProfile.logoUrl, style: 'width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid var(--color-border);' });
+    } else {
+      const initial = (user.displayName || user.email || user.phoneNumber || '?').trim()[0].toUpperCase();
+      avatarElement = el('span', { style: 'display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--color-primary-soft); color: var(--color-primary); font-weight: 600; font-size: 14px;' }, initial);
+    }
+
+    return [
+      themeToggle(),
+      el('a', { href: dashRoute, title: 'Go to Dashboard', style: 'text-decoration: none;' }, avatarElement),
+      el('button', { class: 'btn btn-secondary btn-sm', style: 'padding:0; width:36px; height:36px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; color: var(--color-text-muted);', type: 'button', onClick: async () => { await signOut(); } }, [ 
+        el('i', { 'data-lucide': 'log-out', style: 'width:20px;' }) 
+      ])
+    ];
+  }
+
+  function render() {
+    clearChildren(root);
+    const actions = currentUser ? loggedInActions(currentUser) : [themeToggle(), ...loggedOutActions()];
+
+    root.append(
+      el('div', { class: 'navbar' }, [
+        el('div', { class: 'navbar__inner' }, [
+          el('a', { class: 'navbar__logo', href: ROUTES.HOME }, [
+            el('img', { src: '/assets/logo.png', alt: 'BloreWork Logo', class: 'navbar__logo-img' }),
+            el('span', { class: 'navbar__logo-text' }, APP_NAME)
+          ]),
+          el('nav', { class: 'navbar__links' }, [
+            el('a', { class: 'navbar__link', href: '/pages/jobs/index.html' }, 'Find Jobs'),
+          ]),
+          el('div', { class: 'navbar__actions' }, actions),
+        ]),
+      ])
+    );
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  render();
+  await onAuthChange(async (user) => { 
+    currentUser = user; 
+    if (user) {
+      try {
+        userProfile = await getUserProfile(user.uid);
+        if (userProfile && userProfile.role) userRole = userProfile.role;
+      } catch (err) {}
+    } else {
+      userProfile = null;
+    }
+    render(); 
+  });
+}
+
+========================================
+FILE: public/js/components/bottom-nav.js
+========================================
+import { el, qs, clearChildren } from '../utils/dom-utils.js';
+import { ROUTES } from '../config/app-config.js';
+import { onAuthChange, getCurrentUserRole } from '../firebase/auth.service.js';
+
+export async function initBottomNav() {
+  const root = qs('#bottom-nav-root');
+  if (!root) return;
+
+  async function render(user) {
+    clearChildren(root);
+    document.body.classList.toggle('has-bottom-nav', !!user);
+    if (!user) return;
+
+    const role = await getCurrentUserRole();
+    const currentPath = window.location.pathname;
+
+    let dashRoute = '/pages/worker/dashboard.html';
+    if (role === 'client') dashRoute = '/pages/client/dashboard.html';
+    if (role === 'admin') dashRoute = ROUTES.ADMIN_DASHBOARD;
+
+    let profileRoute = '/pages/worker/profile.html';
+    if (role === 'client') profileRoute = '/pages/client/profile.html';
+
+    const items = [
+      { label: 'Home', icon: 'home', href: ROUTES.HOME, match: '/' },
+      { label: 'Search', icon: 'search', href: ROUTES.JOBS, match: '/pages/jobs/index.html' },
+      role === 'client'
+        ? { label: 'Post', icon: 'plus-circle', href: ROUTES.POST_JOB, match: '/pages/client/post-job.html' }
+        : { label: 'Saved', icon: 'bookmark', href: '/pages/worker/saved.html', match: '/pages/worker/saved.html' },
+      { label: 'Account', icon: 'user', href: profileRoute, match: profileRoute },
+    ];
+
+    root.append(
+      el('div', { class: 'bottom-nav' }, [
+        el('div', { class: 'bottom-nav__inner' },
+          items.map((it) => {
+            const isActive = currentPath === it.match || (it.match === '/' && currentPath === '/index.html');
+            return el('a', { class: `bottom-nav__link ${isActive ? 'active' : ''}`, href: it.href }, [
+              el('i', { 'data-lucide': it.icon, style: 'width: 20px; height: 20px;' }),
+              el('span', {}, it.label)
+            ]);
+          })
+        ),
+      ])
+    );
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  render(null);
+  await onAuthChange(render);
+}
